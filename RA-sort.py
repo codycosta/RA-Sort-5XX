@@ -199,4 +199,4 @@ for file in os.listdir():
     elif '85-P' in name:
         shutil.move(file, '85')
 
-print('\nDone :)\nSome folders may be empty, remove at your own disgression\n')
+print('\nDone :)\nSome folders may be empty, remove at your own disgression\n\n')

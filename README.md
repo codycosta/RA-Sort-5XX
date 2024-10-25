@@ -14,15 +14,14 @@
 
 ### 1:
 Navigate to a folder where you have some RA files located\
-For example let's say they exist in the following folder:\
+For example let's say they exist in the following folder:
 
 > cd ~/Documents/5XX/52XX/SV_RA
 
 ### 2:
 
 Run RA-sort.py:
-After downloading RA-sort.py from github here, I'd recommend keeping it (or a copy) close to, or even inside, the RA directory you intend to sort.\
-This way, typing out the file path is not a hassle
+After downloading RA-sort.py from github here, I'd recommend keeping it (or a copy) close to, or even inside, the RA directory you intend to sort. This way, typing out the file path is not a hassle
 
 > ~/Documents/5XX/52XX/SV_RA >> python [path to RA-sort.py]
 
@@ -46,8 +45,7 @@ Before\
 <br>
 
 After\
-Uutput on left, terminal activity on right\
-![image](readme-imgs/cleaned-folder.png)
+![image](readme-imgs/cleaned-2.png)
 <br>
 <br>
 <br>

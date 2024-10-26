@@ -174,13 +174,16 @@ time.sleep(1/2)
 for file in os.listdir():
     name = os.path.splitext(file)[0]
 
-    if '65-P' in name:
+    if 'MC' in name:
+        shutil.move(file, '75')
+    
+    elif '65-P' in name and 'MC' not in name:
         shutil.move(file, '65')
 
-    elif '75-P' in name:
+    elif '75-P' in name and 'MC' not in name:
         shutil.move(file, '75')
 
-    elif '85-P' in name:
+    elif '85-P' in name and 'MC' not in name:
         shutil.move(file, '85')
 
 
@@ -193,13 +196,17 @@ time.sleep(1/2)
 for file in os.listdir():
     name = os.path.splitext(file)[0]
 
-    if '65-P' in name:
+    if 'MC' in name:
+        shutil.move(file, '75')
+    
+    elif '65-P' in name and 'MC' not in name:
         shutil.move(file, '65')
 
-    elif '75-P' in name:
+    elif '75-P' in name and 'MC' not in name:
         shutil.move(file, '75')
 
-    elif '85-P' in name:
+    elif '85-P' in name and 'MC' not in name:
         shutil.move(file, '85')
+
 
 print('\nDone :)\nSome folders may be empty, remove at your own disgression\n\n')

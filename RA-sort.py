@@ -145,7 +145,7 @@ for file in os.listdir():
     elif 'SPICA200V7' in name:
 
         # STARLIGHT DATA
-        if 'UXRsl' in name or 'sl65' in name:
+        if 'UXRsl' in name or 'sl' in name and '-SL-' in name:
             shutil.move(file, 'SL')
 
         # COG DATA
@@ -157,7 +157,7 @@ for file in os.listdir():
             if 'sl' not in name:
                 shutil.move(file, 'EPSM')
 
-            elif 'sl' in name and '-D2D-N-' in name or 'sl' in name and '-DDB-N-' in name:
+            elif 'sl' in name and '-D2D-' in name or 'sl' in name and '-DDB-' in name:
                 shutil.move(file, 'EPSM')
 
 

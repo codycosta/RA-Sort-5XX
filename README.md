@@ -44,28 +44,28 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 <br>
 
 When running, you can use the **python** or **py** prefix command\
-![image](readme-imgs/cmd.png)
+![image](etc/readme-imgs/cmd.png)
 <br>
 <br>
 
 ### Before
-![image](readme-imgs/cluttered-folder.png)
+![image](etc/readme-imgs/cluttered-folder.png)
 <br>
 <br>
 
 ### After
-![image](readme-imgs/cleaned-2.png)
+![image](etc/readme-imgs/cleaned-2.png)
 <br>
 <br>
 <br>
 
 # How To Download RA-sort.py
 At the top of the page if you are reading this, click on RA-sort.py\
-![image](readme-imgs/file.png)
+![image](etc/readme-imgs/file.png)
 <br>
 
 Next, on the top right of the file page, click the button to download raw file\
-![image](readme-imgs/download.png)
+![image](etc/readme-imgs/download.png)
 <br>
 
 ### That's it, your file will be in your downloads folder
@@ -76,7 +76,7 @@ Next, on the top right of the file page, click the button to download raw file\
 ## Step 1: Make sure you have python installed (version 3.7 or later)
 Python can be downloaded from https://www.python.org/. I would recommend installing the latest version if you are unsure.\
 To check if your machine already has a version of python installed, simply press the windows key and search for 'python':\
-![image](readme-imgs/check-python.png)
+![image](etc/readme-imgs/check-python.png)
 <br>
 <br>
 If you do not see a version installed, follow the instructions on Python's website linked above for a fresh install. After downloading, be sure to run the .exe file to install it.
@@ -95,25 +95,25 @@ Python 3.13 is the latest release at the time of development.\
 <br>
 
 Next, press the windows key and type out 'env', and click on **Edit the system environment variables**
-![image](readme-imgs/sys-env.png)
+![image](etc/readme-imgs/sys-env.png)
 <br>
 <br>
 
 A new 'System Properties' window will open, and we want to click on **Environment Variables**\
-![image](readme-imgs/sys-props.png)
+![image](etc/readme-imgs/sys-props.png)
 <br>
 <br>
 
 This will bring up a new window called 'Environment Variables'\
 Navigate to the **system variables** section and click on the item labeled Path and then click **Edit**
-![image](readme-imgs/env-vars.png)
+![image](etc/readme-imgs/env-vars.png)
 <br>
 <br>
 
 Another new window will pop up, and we will then click on **New**\
 In the field that pops up, here is where you will paste in your PYTHON PATH from earlier\
 You can see mine listed at the bottom\
-![image](readme-imgs/edit-vars.png)
+![image](etc/readme-imgs/edit-vars.png)
 <br>
 
 #### Go ahead and click on **OK** on all the open windows to close them, and you are done with path setup!
@@ -123,13 +123,13 @@ You can see mine listed at the bottom\
 ## Step 3:  Diasabling Execution Aliasing
 This part is easier than step 2.\
 Press the windows key and search for 'app exec', and click on **Manage app execution aliases**
-![image](readme-imgs/execution.png)
+![image](etc/readme-imgs/execution.png)
 <br>
 <br>
 
 Scroll down until you see 2 programs named **App Installer** with python.exe and python3.exe listed below the titles.\
 Turn both of these **OFF**\
-![image](readme-imgs/alias-off.png)
+![image](etc/readme-imgs/alias-off.png)
 <br>
 <br>
 

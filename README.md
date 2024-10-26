@@ -1,50 +1,59 @@
 # 5XX RA Sort Python script
 
 ### Turn a cluttered directory into a well organized file storage, ready for excel!
-<br>
 
-## !! Please read if you are new to using python or need assistance with setting up your machine !!
-
-### Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use
+<h3 style='color:salmon'>
+    <p>Please read if you are new to using python or need assistance with setting up your machine</p>
+    <p>
+        Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use. I've tried to make this guide as easy and beginner friendly as possible
+    </p>
+</h3>
 
 <br>
 <br>
 
 # Usage
 
-### 1:
+### Step 1:
 Navigate to a folder where you have some RA files located\
 For example let's say they exist in the following folder:
 
-> cd ~/Documents/5XX/52XX/SV_RA
+<code>cd ~/Documents/5XX/SV_RA</code>
 
-### 2:
+### Step 2:
 
-Run RA-sort.py:
-After downloading RA-sort.py from github here, I'd recommend keeping it (or a copy) close to, or even inside, the RA directory you intend to sort. This way, typing out the file path is not a hassle
+Run RA-sort.py:\
+After downloading RA-sort.py from github here, I'd recommend keeping it (or a copy) close to, or even inside, the RA directory you intend to sort.\
+This way, typing out the file path is not a hassle
 
-> ~/Documents/5XX/52XX/SV_RA >> python [path to RA-sort.py]
+<code>~/Documents/5XX/52XX/SV_RA> python [path to RA-sort.py]</code>
 
 <br>
 
-### Example
+## Example
 In the below photos you can see I have some RA files stored in:
-#### ~/sample-RAs
+### ~/KLA-RA-scripts/sample-RAs/
+<br>
+
 and my copy of RA-sort.py stored in the previous folder:
-#### ~/
+### ~/KLA-RA-scripts/
+<br>
 
-This makes calling the file easy, as all I have to do is navigate to my RA folder and retreat by one folder to execute the script, rather than trying to remember the path to downloads or documents:\
+Keeping RA-sort.py close to the RA folder makes execution easy.\
+I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py which is in the previous folder:\
+<br>
+
+When running, you can use the **python** or **py** prefix command\
 ![image](readme-imgs/cmd.png)
-
 <br>
 <br>
 
-Before\
+### Before
 ![image](readme-imgs/cluttered-folder.png)
 <br>
 <br>
 
-After\
+### After
 ![image](readme-imgs/cleaned-2.png)
 <br>
 <br>
@@ -58,6 +67,8 @@ At the top of the page if you are reading this, click on RA-sort.py\
 Next, on the top right of the file page, click the button to download raw file\
 ![image](readme-imgs/download.png)
 <br>
+
+### That's it, your file will be in your downloads folder
 <br>
 <br>
 
@@ -123,4 +134,5 @@ Turn both of these **OFF**\
 <br>
 
 
-# Setup is finished, you can now return to the top to read on the usage of the file!
+### Setup is finished, your computer is ready to run Python
+### Navigate back to the top to read about the file Usage

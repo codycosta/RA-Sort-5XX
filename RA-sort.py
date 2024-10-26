@@ -154,7 +154,10 @@ for file in os.listdir():
 
         # EPSM DATA
         if 'EPSM' in name or '260E-' in name or '320E-' in name or '400E-' in name:
-            if 'UXRsl' not in name and 'sl65' not in name:
+            if 'sl' not in name:
+                shutil.move(file, 'EPSM')
+
+            elif 'sl' in name and '-D2D-N-' in name or 'sl' in name and '-DDB-N-' in name:
                 shutil.move(file, 'EPSM')
 
 

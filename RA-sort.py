@@ -78,17 +78,24 @@
 #       ~/Documents >>  python ../Downloads/RA-sort.py
 
 
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Needed Python Packages'''
 
 import os
 import shutil
-import time
+import time     # well maybe this one isn't really needed
 
 
-# check we are in the current directory when running
-print(f'\nRunning script in current folder:\t{os.getcwd()}')
-print('Creating base folders...\n')
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Create base folders for scan types'''
+
+# record root directory location (folder the script was run in)
+root = os.getcwd()
+
+print(f'\nRunning script in current folder:\t{root}')
+print('\nCreating base folders...\n')
 
 
 # create new base folders [CETUS, COG, EPSM, SL]
@@ -96,63 +103,54 @@ base_folders = ['CETUS', 'COG', 'EPSM', 'SL']
 
 for folder in base_folders:
     if not os.path.exists(folder):
-        print(f'creating folder:\t{os.getcwd()}\\{folder}')
+        print(f'created folder:\t{os.getcwd()}\\{folder}')
         os.mkdir(folder)
-        time.sleep(1/4)
+        time.sleep(1/8)
 
 
-# create sub folders for COG and EPSM for each threshold range [65, 75, and 85]
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Create sub folders for thresholds'''
+
 thresholds = ['65', '75', '85']
 
-os.chdir('COG')
-print(f'\n\nchanging folder to:\t{os.getcwd()}')
-print('Creating COG thresholds...\n')
+for folder in ['COG', 'EPSM']:
+    os.chdir(f'{root}/{folder}')
 
-for threshold in thresholds:
-    if not os.path.exists(threshold):
-        print(f'creating folder:\t{os.getcwd()}\\{threshold}')
-        os.mkdir(threshold)
-        time.sleep(1/4)
+    print(f'\n\nCreating {folder} thresholds...\n')
 
-
-os.chdir('../EPSM')
-print(f'\n\nchanging folder to:\t{os.getcwd()}')
-print('Creating EPSM thresholds...\n')
-
-for threshold in thresholds:
-    if not os.path.exists(threshold):
-        print(f'creating folder:\t{os.getcwd()}\\{threshold}')
-        os.mkdir(threshold)
-        time.sleep(1/4)
+    for t in thresholds:
+        if not os.path.exists(t):
+            print(f'created folder:\t{os.getcwd()}\\{t}')
+            os.mkdir(t)
+            time.sleep(1/8)
 
 
-# sub directories made, now we can begin organizing
 
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Sort RA files first into base directory destinations'''
 
 # list files in parent directory and separate into base folders
 os.chdir('../')
-
-
 for file in os.listdir():
     
     name = os.path.splitext(file)[0]
-    # print(name)
 
-    # CETUS data
+    # CETUS
     if 'CETUS400V5' in name:
         shutil.move(file, 'CETUS')
 
     elif 'SPICA200V7' in name:
 
-        # STARLIGHT DATA
+        # STARLIGHT
         if 'UXRsl' in name or 'sl' in name and '-SL-' in name:
             shutil.move(file, 'SL')
 
-        # COG DATA
+        # COG
         if 'COG' in name or '260C-' in name or '320C-' in name or '400C-' in name:
             shutil.move(file, 'COG')
 
-        # EPSM DATA
+        # EPSM
         if 'EPSM' in name or '260E-' in name or '320E-' in name or '400E-' in name:
             if 'sl' not in name:
                 shutil.move(file, 'EPSM')
@@ -161,52 +159,67 @@ for file in os.listdir():
                 shutil.move(file, 'EPSM')
 
 
-# categorize COG and EPSM data into threshold folders
-print(f'\n\nChanging directory back to root folder:\t{os.getcwd()}')
-print('Organizing CETUS/ and SL/ data...\n\n')
 
-# COG DATA
-os.chdir('COG')
-print(os.getcwd())
-print('Organizing COG thresholds...\n')
-time.sleep(1/2)
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Sort RA files into respective thresholds'''
 
-for file in os.listdir():
-    name = os.path.splitext(file)[0]
+print('\n\nOrganizing CETUS/ and SL/ data...\n')
+time.sleep(1/8)
 
-    if 'MC' in name:
-        shutil.move(file, '75')
-    
-    elif '65-P' in name and 'MC' not in name:
-        shutil.move(file, '65')
+for folder in ['COG', 'EPSM']:
+    os.chdir(f'{root}/{folder}')
 
-    elif '75-P' in name and 'MC' not in name:
-        shutil.move(file, '75')
+    print(f'Organizing {folder} thresholds...\n')
 
-    elif '85-P' in name and 'MC' not in name:
-        shutil.move(file, '85')
+    for file in os.listdir():
+        name = os.path.splitext(file)[0]
 
+        if 'MC' in name:
+            shutil.move(file, '75')
 
-# EPSM DATA
-os.chdir('../EPSM')
-print(os.getcwd())
-print('Organizing EPSM thresholds...\n')
-time.sleep(1/2)
+        elif '65-P' in name and 'MC' not in name:
+            shutil.move(file, '65')
 
-for file in os.listdir():
-    name = os.path.splitext(file)[0]
+        elif '75-P' in name and 'MC' not in name:
+            shutil.move(file, '75')
 
-    if 'MC' in name:
-        shutil.move(file, '75')
-    
-    elif '65-P' in name and 'MC' not in name:
-        shutil.move(file, '65')
+        elif '85-P' in name and 'MC' not in name:
+            shutil.move(file, '85')
 
-    elif '75-P' in name and 'MC' not in name:
-        shutil.move(file, '75')
-
-    elif '85-P' in name and 'MC' not in name:
-        shutil.move(file, '85')
+    time.sleep(1/2)
 
 
-print('\nDone :)\nSome folders may be empty, remove at your own disgression\n\n')
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Delete any empty folders'''
+
+os.chdir(root)
+
+for folder in base_folders:
+
+    # check base folders for emptiness
+    if not os.listdir(folder):
+        shutil.rmtree(folder)
+
+    os.chdir(folder)
+
+    # check thresholds for emptiness
+    for item in os.listdir():
+
+        if os.path.splitext(item)[1] == '.txt':
+            continue
+        
+        if not os.listdir(item):
+            shutil.rmtree(item)
+
+    os.chdir(root)
+
+            
+
+# display terminal message for when program finishes
+
+print(
+'''\n////////////////////////////////////////////\n\n
+PROCESS COMPLETED SUCCESSFULLY\n\n
+////////////////////////////////////////////'''
+)

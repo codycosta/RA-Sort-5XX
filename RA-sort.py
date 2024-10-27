@@ -201,16 +201,17 @@ for folder in base_folders:
     if not os.listdir(folder):
         shutil.rmtree(folder)
 
-    os.chdir(folder)
+    else:
+        os.chdir(folder)
 
-    # check thresholds for emptiness
-    for item in os.listdir():
+        # check thresholds for emptiness
+        for item in os.listdir():
 
-        if os.path.splitext(item)[1] == '.txt':
-            continue
-        
-        if not os.listdir(item):
-            shutil.rmtree(item)
+            if os.path.splitext(item)[1] == '.txt':
+                continue
+            
+            if not os.listdir(item):
+                shutil.rmtree(item)
 
     os.chdir(root)
 

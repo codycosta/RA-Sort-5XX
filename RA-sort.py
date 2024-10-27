@@ -193,12 +193,14 @@ for folder in ['COG', 'EPSM']:
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Delete any empty folders'''
 
+print('\nRemoving any empty directories...\n')
 os.chdir(root)
 
 for folder in base_folders:
 
     # check base folders for emptiness
     if not os.listdir(folder):
+        print(f'removed folder:\t{root}\\{folder}')
         shutil.rmtree(folder)
 
     else:
@@ -211,6 +213,7 @@ for folder in base_folders:
                 continue
             
             if not os.listdir(item):
+                print(f'removed folder:\t{os.getcwd()}\\{item}')
                 shutil.rmtree(item)
 
     os.chdir(root)
@@ -220,7 +223,7 @@ for folder in base_folders:
 # display terminal message for when program finishes
 
 print(
-'''\n////////////////////////////////////////////\n\n
+'''\n\n////////////////////////////////////////////\n\n
 PROCESS COMPLETED SUCCESSFULLY\n\n
 ////////////////////////////////////////////'''
 )

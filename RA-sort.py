@@ -219,53 +219,54 @@ for folder in base_folders:
 
     os.chdir(root)
 
-            
+
+
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Optional inclusion to copy/move matching excel sheets into each folder'''
 
 # my excel folder (relative to root) is '../../blank-workbooks/'
 
-if sys.argv:
+if len(sys.argv) > 1:
 
     excel = sys.argv[1]
 
-    print(f'cmd argument given, user chosen to copy excel workbooks to folders...')
+    print(f'\n\ncmd argument given, user chose to copy excel workbooks to folders...\n')
 
     os.chdir(root)
     os.chdir(excel)
 
     excel_dir = os.getcwd()
 
-
     for folder in os.listdir(root): # CETUS, COG, EPSM, SL      base folders
         os.chdir(f'{root}/{folder}')
 
-        if folder == 'CETUS' or folder == 'SL':
 
-            numRAs = len('P0' in os.listdir())
+        numRAs = sum(['.P0.' in file for file in os.listdir()])
 
-            os.chdir(excel_dir)
-            for file in os.listdir():
-                if folder in file:
+        os.chdir(excel_dir)
+        for file in os.listdir():
+            if folder in file:
+                print(f'copying {file}\tto:\t{root}\\{folder}\\*')
+                shutil.copy(file, f'{root}/{folder}')
+
+                if numRAs > 10:
+                    shutil.move(f'{root}/{folder}/{file}', f'{root}/{folder}/{os.path.splitext(file)[0]}(2){os.path.splitext(file)[1]}')
                     shutil.copy(file, f'{root}/{folder}')
 
-                    if numRAs > 10:
-                        shutil.move(f'{root}/{folder}/{file}', f'{root}/{folder}/{os.path.splitext(file)[0]}(2){os.path.splitext(file)[1]}')
-                        shutil.copy(file, f'{root}/{folder}')
+    os.chdir(root)
+    for folder in ['COG', 'EPSM']:
 
+        excel_book = os.listdir(folder)[-1]
 
-        elif folder == 'COG' or folder == 'EPSM':
-            for threshold in os.listdir():
+        for thresholds in os.listdir(folder)[:-1]:
+                shutil.copy(f'{root}/{folder}/{excel_book}', f'{root}/{folder}/{thresholds}')
 
-                os.chdir(excel_dir)
-                for file in os.listdir():
-                    if folder in file:
-                        shutil.copy(file, f'{root}/{folder}/{threshold}')
+                if len(os.listdir(f'{folder}/{thresholds}')) > 11:
+                    shutil.move(f'{root}/{folder}/{thresholds}/{excel_book}', f'{root}/{folder}/{thresholds}/{os.path.splitext(excel_book)[0]}-2{os.path.splitext(excel_book)[1]}')
+                    shutil.copy(f'{root}/{folder}/{excel_book}', f'{root}/{folder}/{thresholds}')
 
-                        if numRAs > 10:
-                            shutil.move(f'{root}/{folder}/{threshold}/{file}', f'{root}/{folder}/{threshold}/{os.path.splitext(file)[0]}(2){os.path.splitext(file)[1]}')
-                            shutil.copy(file, f'{root}/{folder}/{threshold}')
-        
+        os.remove(f'{folder}/{excel_book}')
+
 
 
 # display terminal message for when program finishes

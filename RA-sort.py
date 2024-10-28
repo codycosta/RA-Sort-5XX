@@ -83,6 +83,7 @@
 '''Needed Python Packages'''
 
 import os
+import sys
 import shutil
 import time     # well maybe this one isn't really needed
 
@@ -219,6 +220,53 @@ for folder in base_folders:
     os.chdir(root)
 
             
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Optional inclusion to copy/move matching excel sheets into each folder'''
+
+# my excel folder (relative to root) is '../../blank-workbooks/'
+
+if sys.argv:
+
+    excel = sys.argv[1]
+
+    print(f'cmd argument given, user chosen to copy excel workbooks to folders...')
+
+    os.chdir(root)
+    os.chdir(excel)
+
+    excel_dir = os.getcwd()
+
+
+    for folder in os.listdir(root): # CETUS, COG, EPSM, SL      base folders
+        os.chdir(f'{root}/{folder}')
+
+        if folder == 'CETUS' or folder == 'SL':
+
+            numRAs = len('P0' in os.listdir())
+
+            os.chdir(excel_dir)
+            for file in os.listdir():
+                if folder in file:
+                    shutil.copy(file, f'{root}/{folder}')
+
+                    if numRAs > 10:
+                        shutil.move(f'{root}/{folder}/{file}', f'{root}/{folder}/{os.path.splitext(file)[0]}(2){os.path.splitext(file)[1]}')
+                        shutil.copy(file, f'{root}/{folder}')
+
+
+        elif folder == 'COG' or folder == 'EPSM':
+            for threshold in os.listdir():
+
+                os.chdir(excel_dir)
+                for file in os.listdir():
+                    if folder in file:
+                        shutil.copy(file, f'{root}/{folder}/{threshold}')
+
+                        if numRAs > 10:
+                            shutil.move(f'{root}/{folder}/{threshold}/{file}', f'{root}/{folder}/{threshold}/{os.path.splitext(file)[0]}(2){os.path.splitext(file)[1]}')
+                            shutil.copy(file, f'{root}/{folder}/{threshold}')
+        
+
 
 # display terminal message for when program finishes
 

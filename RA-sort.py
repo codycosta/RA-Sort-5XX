@@ -99,7 +99,7 @@ print(f'\nRunning script in current folder:\t{root}')
 print('\nCreating RA backup folder...\n')
 
 if not os.path.exists('backup'):
-    print(f'created folder:\t{root}\\backup')
+    print(f'created folder:\t{root}\\backup\n')
     os.mkdir('backup')
 
 if not os.listdir('backup'):

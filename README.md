@@ -56,7 +56,7 @@ Say we have our blank workbooks in the following folder:
 To reference this folder while sorting so the excel workbooks can be copied and organized too, we would run the following:
 
 ```powershell
-~/Documents/5XX/SV_RA >     py [path to RA-sort.py] [path to blank workbooks]
+~/Documents/5XX/SV_RA >     python [path to RA-sort.py] [path to blank workbooks]
 
 
 
@@ -74,6 +74,7 @@ or with the example file/folder names:
 <br>
 
 When organizing the excel workbooks, RA-sort.py will count the number of RA P0 files in each folder and will duplicate the needed excel workbook should the quantity of unique RA files exceed 10. This way there are the required number of excel files within each base/threshold folder.
+<br>
 
 ## Example
 In the below photos you can see I have some RA files stored in:
@@ -103,7 +104,7 @@ When running, you can use the **python** or **py** prefix command\
 <br>
 
 ### After
-![image](etc/readme-imgs/cleaned-2.png)
+![image](etc/readme-imgs/cleaned-3.png)
 <br>
 <br>
 <br>

@@ -15,12 +15,14 @@
 For example let's say we have some RA's that exist in the following folder:
 
 ```powershell
-cd ~/Documents/5XX/SV_RA
+cd ~/Documents/5XX/SV_RA/
 ```
 <br>
 
 ### Step 2: Run RA-sort.py
-To do this, run the following command below. You can use either **python** or **py** prefixes to reference the python file. Let's say we downloaded and moved RA-sort.py to the following folder:
+>[!TIP]
+>You can use either **python** or **py** prefixes to reference the python file. 
+Let's say we downloaded and moved RA-sort.py to the following folder:
 
 ```powershell
 ~/Documents/5XX/RA-sort.py
@@ -32,13 +34,13 @@ To do this, run the following command below. You can use either **python** or **
 
 Your command line execution would look something like this:
 ```powershell
-~/Documents/5XX/SV_RA>      python [path to RA-sort.py]
+~/Documents/5XX/SV_RA/ >      [python | py] [path to RA-sort.py]
 
 
 
 or with the example file/folder names:
 
-~/Documents/5XX/SV_RA>      python ../RA-sort.py
+~/Documents/5XX/SV_RA/ >      python ../RA-sort.py
 ```
 <br>
 
@@ -53,16 +55,16 @@ Say we have our blank workbooks in the following folder:
 ~/Documents/5XX/blank-workbooks/
 ```
 
-To reference this folder while sorting so the excel workbooks can be copied and organized too, we would run the following:
+To reference this folder we would run the following:
 
 ```powershell
-~/Documents/5XX/SV_RA >     python [path to RA-sort.py] [path to blank workbooks]
+~/Documents/5XX/SV_RA/ >     [python | py] [path to RA-sort.py] [path to blank workbooks]
 
 
 
 or with the example file/folder names:
 
-~/Documents/5XX/SV_RA>      python ../RA-sort.py ../blank-workbooks
+~/Documents/5XX/SV_RA/ >      python ../RA-sort.py ../blank-workbooks
 ```
 
 >[!IMPORTANT]
@@ -74,6 +76,7 @@ or with the example file/folder names:
 <br>
 
 When organizing the excel workbooks, RA-sort.py will count the number of RA P0 files in each folder and will duplicate the needed excel workbook should the quantity of unique RA files exceed 10. This way there are the required number of excel files within each base/threshold folder.
+<br>
 <br>
 
 ## Example

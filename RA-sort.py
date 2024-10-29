@@ -90,14 +90,29 @@ import time     # well maybe this one isn't really needed
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Create base folders for scan types'''
+'''Create backup folder with all pulled RAs to easily reset the workspace if something goes wrong'''
 
 # record root directory location (folder the script was run in)
 root = os.getcwd()
-
 print(f'\nRunning script in current folder:\t{root}')
-print('\nCreating base folders...\n')
 
+print('\nCreating RA backup folder...\n')
+
+if not os.path.exists('backup'):
+    print(f'created folder:\t{root}\\backup')
+    os.mkdir('backup')
+
+if not os.listdir('backup'):
+    for file in os.listdir(root):
+        if os.path.isfile(file):
+            shutil.copy(file, 'backup')
+
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Create base folders for scan types'''
+
+print('\nCreating base folders...\n')
 
 # create new base folders [CETUS, COG, EPSM, SL]
 base_folders = ['CETUS', 'COG', 'EPSM', 'SL']
@@ -246,7 +261,7 @@ if len(sys.argv) > 1:
         os.chdir(excel_dir)
         for file in os.listdir():
             if folder in file:
-                print(f'copying {file}\tto:\t{root}\\{folder}\\*')
+                print(f'copying {file}to:\t{root}\\{folder}\\*')
                 shutil.copy(file, f'{root}/{folder}')
 
                 if numRAs > 10:

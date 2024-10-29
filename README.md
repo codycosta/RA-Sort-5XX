@@ -67,6 +67,8 @@ or with the example file/folder names:
 
 >[!IMPORTANT]
 >If you would like to do this, make sure that each of your blank excel workbooks at least has 'COG', 'EPSM', 'CETUS' and 'SL' in the name.
+<br>
+
 >[!TIP]
 > Like with the RA-sort.py script, I recommend keeping your folder of blank excel workbooks nearby to easily access
 <br>

@@ -261,8 +261,9 @@ if len(sys.argv) > 1:
         for thresholds in os.listdir(folder)[:-1]:
                 shutil.copy(f'{root}/{folder}/{excel_book}', f'{root}/{folder}/{thresholds}')
 
-                if len(os.listdir(f'{folder}/{thresholds}')) > 11:
-                    shutil.move(f'{root}/{folder}/{thresholds}/{excel_book}', f'{root}/{folder}/{thresholds}/{os.path.splitext(excel_book)[0]}-2{os.path.splitext(excel_book)[1]}')
+                # if len(os.listdir(f'{folder}/{thresholds}')) > 11:
+                if sum(['.P0.' in file for file in os.listdir(f'{folder}/{thresholds}')]) > 10:
+                    shutil.move(f'{root}/{folder}/{thresholds}/{excel_book}', f'{root}/{folder}/{thresholds}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
                     shutil.copy(f'{root}/{folder}/{excel_book}', f'{root}/{folder}/{thresholds}')
 
         os.remove(f'{folder}/{excel_book}')

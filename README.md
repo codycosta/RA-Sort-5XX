@@ -2,41 +2,88 @@
 
 ### Turn a cluttered directory into a well organized file storage, ready for excel!
 
-<h3 style='color:salmon'>
-    <p>Please read if you are new to using python or need assistance with setting up your machine</p>
-    <p>
-        Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use. I've tried to make this guide as easy and beginner friendly as possible
-    </p>
-</h3>
+>[!NOTE]
+>Please read if you are new to using python or need assistance with setting up your machine
+>Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use. I've tried to make this guide as easy and beginner friendly as possible.
 
 <br>
 <br>
 
 # Usage
 
-### Step 1:
-Navigate to a folder where you have some RA files located\
-For example let's say they exist in the following folder:
+### Step 1: Navigate to RA folder
+For example let's say we have some RA's that exist in the following folder:
 
-<code>cd ~/Documents/5XX/SV_RA</code>
-
-### Step 2:
-
-Run RA-sort.py:\
-After downloading RA-sort.py from github here, I'd recommend keeping it (or a copy) close to, or even inside, the RA directory you intend to sort.\
-This way, typing out the file path is not a hassle
-
-<code>~/Documents/5XX/52XX/SV_RA> python [path to RA-sort.py]</code>
-
+```powershell
+cd ~/Documents/5XX/SV_RA
+```
 <br>
+
+### Step 2: Run RA-sort.py
+To do this, run the following command below. You can use either **python** or **py** prefixes to reference the python file. Let's say we downloaded and moved RA-sort.py to the following folder:
+
+```powershell
+~/Documents/5XX/RA-sort.py
+```
+
+>[!TIP]
+>After downloading RA-sort.py from github here, I'd recommend keeping it (or a copy) close to, or even inside, the RA directory you intend to sort. This way, typing out the file path is not a hassle.
+<br>
+
+Your command line execution would look something like this:
+```powershell
+~/Documents/5XX/SV_RA>      python [path to RA-sort.py]
+
+
+
+or with the example file/folder names:
+
+~/Documents/5XX/SV_RA>      python ../RA-sort.py
+```
+<br>
+
+## Optional
+### Step 3: Organize excel along with RA's
+
+You can also elect to have the script copy and organize your excel workbooks along with the RA files.\
+To do this, after calling RA-sort.py, add an extra argument that references the path to the blank workbook folder.\
+Say we have our blank workbooks in the following folder:
+
+```powershell
+~/Documents/5XX/blank-workbooks/
+```
+
+To reference this folder while sorting so the excel workbooks can be copied and organized too, we would run the following:
+
+```powershell
+~/Documents/5XX/SV_RA >     py [path to RA-sort.py] [path to blank workbooks]
+
+
+
+or with the example file/folder names:
+
+~/Documents/5XX/SV_RA>      python ../RA-sort.py ../blank-workbooks
+```
+
+>[!IMPORTANT]
+>If you would like to do this, make sure that each of your blank excel workbooks at least has 'COG', 'EPSM', 'CETUS' and 'SL' in the name.
+>[!TIP]
+> Like with the RA-sort.py script, I recommend keeping your folder of blank excel workbooks nearby to easily access
+<br>
+
+When organizing the excel workbooks, RA-sort.py will count the number of RA P0 files in each folder and will duplicate the needed excel workbook should the quantity of unique RA files exceed 10. This way there are the required number of excel files within each base/threshold folder.
 
 ## Example
 In the below photos you can see I have some RA files stored in:
-### ~/KLA-RA-scripts/sample-RAs/
+```powershell
+~/KLA-RA-scripts/sample-RAs/
+```
 <br>
 
 and my copy of RA-sort.py stored in the previous folder:
-### ~/KLA-RA-scripts/
+```powershell
+~/KLA-RA-scripts/RA-sort.py
+```
 <br>
 
 Keeping RA-sort.py close to the RA folder makes execution easy.\

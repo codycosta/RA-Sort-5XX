@@ -3,8 +3,9 @@
 ### Turn a cluttered directory into a well organized file storage, ready for excel!
 
 >[!NOTE]
->Please read if you are new to using python or need assistance with setting up your machine
->Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use. I've tried to make this guide as easy and beginner friendly as possible.
+>Please read if you are new to using python or need assistance with setting up your machine.
+
+#### Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use. I've tried to make this guide as easy and beginner friendly as possible.
 
 <br>
 <br>

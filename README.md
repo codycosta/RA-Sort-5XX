@@ -21,9 +21,7 @@ cd ~/Documents/5XX/SV_RA/
 <br>
 
 ### Step 2: Run RA-sort.py
->[!TIP]
->You can use either **python** or **py** prefixes to reference the python file. 
-Let's say we downloaded and moved RA-sort.py to the following folder:
+Let's say we downloaded and moved RA-sort.py to the following folder. Continue to the next section for download instructions.
 
 ```powershell
 ~/Documents/5XX/RA-sort.py
@@ -34,6 +32,11 @@ Let's say we downloaded and moved RA-sort.py to the following folder:
 <br>
 
 Your command line execution would look something like this:
+
+>[!TIP]
+>You can use either **python** or **py** prefixes to reference the python file. 
+<br>
+
 ```powershell
 ~/Documents/5XX/SV_RA/ >      [python | py] [path to RA-sort.py]
 

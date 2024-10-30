@@ -16,7 +16,7 @@
 For example let's say we have some RA's that exist in the following folder:
 
 ```powershell
-cd ~/Documents/5XX/SV_RA/
+~/Documents/5XX/SV_RA/
 ```
 <br>
 
@@ -29,13 +29,11 @@ Let's say we downloaded and moved RA-sort.py to the following folder. Continue t
 
 >[!TIP]
 >After downloading RA-sort.py from github here, I'd recommend keeping it (or a copy) close to, or even inside, the RA directory you intend to sort. This way, typing out the file path is not a hassle.
+
 <br>
 
 Your command line execution would look something like this:
 
->[!TIP]
->You can use either **python** or **py** prefixes to reference the python file. 
-<br>
 
 ```powershell
 ~/Documents/5XX/SV_RA/ >      [python | py] [path to RA-sort.py]
@@ -46,6 +44,9 @@ or with the example file/folder names:
 
 ~/Documents/5XX/SV_RA/ >      python ../RA-sort.py
 ```
+>[!TIP]
+>You can use either **python** or **py** prefixes to reference the python file. 
+
 <br>
 
 ## Optional
@@ -100,7 +101,6 @@ Keeping RA-sort.py close to the RA folder makes execution easy.\
 I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py which is in the previous folder:\
 <br>
 
-When running, you can use the **python** or **py** prefix command\
 ![image](etc/readme-imgs/cmd.png)
 <br>
 <br>
@@ -146,7 +146,10 @@ First, keep your path to python handy, we will need it later.\
 <br>
 
 You can find this located at: 
-### C:\Users\USER\AppData\Local\Programs\Python\Python312\
+```powershell
+C:\Users\<USER>\AppData\Local\Programs\Python\Python312\
+```
+
 Just enter your USER name and substitute Python312 with whichever version you downloaded.\
 Python 3.13 is the latest release at the time of development.\
 <br>

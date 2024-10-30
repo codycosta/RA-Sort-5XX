@@ -261,7 +261,7 @@ if len(sys.argv) > 1:
         os.chdir(excel_dir)
         for file in os.listdir():
             if folder in file:
-                print(f'copying {file}to:\t{root}\\{folder}\\*')
+                print(f'copying {file} to:\t{root}\\{folder}\\*')
                 shutil.copy(file, f'{root}/{folder}')
 
                 if numRAs > 10:

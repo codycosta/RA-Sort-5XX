@@ -3,15 +3,15 @@
 >[!IMPORTANT]
 > All RA.txt files and the like are blank mock-ups used for demonstrating the usage and performance of the product. No company data was used in the making of this tool.
 
-### Turn a cluttered directory into a well organized file storage, ready for excel!
-
 >[!NOTE]
 >Please read if you are new to using python or need assistance with setting up your machine.
 
-#### Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use. I've tried to make this guide as easy and beginner friendly as possible.
-
 >[!NOTE]
 >RA-sort.py will automatically create a backup folder to dump a copy of all RA files into before sorting. This way if something were to go wrong during execution, or you as the user are unhappy with the results, there is a safe restore point to reset the folder to how it started.
+
+### Turn a cluttered directory into a well organized file storage, ready for excel!
+
+#### Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use. I've tried to make this guide as easy and beginner friendly as possible.
 
 <br>
 <br>

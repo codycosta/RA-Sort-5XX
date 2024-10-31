@@ -1,5 +1,8 @@
 # 5XX RA Sort Python script
 
+>[!IMPORTANT]
+> All RA.txt files and the like are blank mock-ups used for demonstrating the usage and performance of the product. No company data was used in the making of this tool.
+
 ### Turn a cluttered directory into a well organized file storage, ready for excel!
 
 >[!NOTE]
@@ -7,10 +10,28 @@
 
 #### Setup should not take more than 20 minutes and is a one time deal, after that there's no other prerequisites to begin use. I've tried to make this guide as easy and beginner friendly as possible.
 
+>[!NOTE]
+>RA-sort.py will automatically create a backup folder to dump a copy of all RA files into before sorting. This way if something were to go wrong during execution, or you as the user are unhappy with the results, there is a safe restore point to reset the folder to how it started.
+
 <br>
 <br>
 
 # Usage
+
+### Step 0: Launch a terminal environment
+#### Any terminal you have installed will work (cmd, bash, powershell, etc...)
+
+<br>
+
+The default windows terminal on our KLA machines is Windows Command Prompt. To launch this just press the windows key and type 'cmd':\
+![image](etc/readme-imgs/cmd-terminal.png)
+
+<br>
+
+To elevate your terminal game, I'd recommend using Powershell rather then Command Prompt, which can be easily found in the same fashion by searching for Powershell at the windows start menu:\
+![image](etc/readme-imgs/powershell.png)
+
+<br>
 
 ### Step 1: Navigate to RA folder
 For example let's say we have some RA's that exist in the following folder:
@@ -98,8 +119,7 @@ and my copy of RA-sort.py stored in the previous folder:
 <br>
 
 Keeping RA-sort.py close to the RA folder makes execution easy.\
-I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py which is in the previous folder:\
-<br>
+I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py which is in the previous folder:
 
 ![image](etc/readme-imgs/cmd.png)
 <br>

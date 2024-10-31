@@ -130,7 +130,7 @@ for folder in base_folders:
 
 thresholds = ['65', '75', '85']
 
-for folder in ['COG', 'EPSM']:
+for folder in ['COG', 'EPSM', 'SL']:
     os.chdir(f'{root}/{folder}')
 
     print(f'\n\nCreating {folder} thresholds...\n')
@@ -147,7 +147,7 @@ for folder in ['COG', 'EPSM']:
 '''Sort RA files first into base directory destinations'''
 
 # list files in parent directory and separate into base folders
-os.chdir('../')
+os.chdir(root)
 for file in os.listdir():
     
     name = os.path.splitext(file)[0]
@@ -179,10 +179,10 @@ for file in os.listdir():
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Sort RA files into respective thresholds'''
 
-print('\n\nOrganizing CETUS/ and SL/ data...\n')
+print('\n\nOrganizing CETUS data...\n')
 time.sleep(1/8)
 
-for folder in ['COG', 'EPSM']:
+for folder in ['COG', 'EPSM', 'SL']:
     os.chdir(f'{root}/{folder}')
 
     print(f'Organizing {folder} thresholds...\n')
@@ -201,6 +201,12 @@ for folder in ['COG', 'EPSM']:
 
         elif '85-P' in name and 'MC' not in name:
             shutil.move(file, '85')
+
+        # special case for X5.3 P72i tasks that don't follow conventional algo names
+        # slsd and slmd algo tasks get thrown in TR65 folder
+
+        elif 'slmd' in name or 'slsd' in name:
+            shutil.move(file, '65')
 
     time.sleep(1/2)
 
@@ -269,7 +275,7 @@ if len(sys.argv) > 1:
                     shutil.copy(file, f'{root}/{folder}')
 
     os.chdir(root)
-    for folder in ['COG', 'EPSM']:
+    for folder in ['COG', 'EPSM', 'SL']:
 
         excel_book = os.listdir(folder)[-1]
 

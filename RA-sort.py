@@ -201,23 +201,29 @@ for folder in ['COG', 'EPSM', 'SL']:
             else:
                 threshold_start = name.index('dbdd') + 4
                 threshold = name[threshold_start: threshold_start + 2]
+
+                if threshold == 'sl':
+                    threshold = name[threshold_start + 2: threshold_start + 4]
+                    
                 shutil.move(file, threshold)
 
-        if '65-P' in name:
-            shutil.move(file, '65')
+        else:
 
-        elif '75-P' in name:
-            shutil.move(file, '75')
+            if '65-P' in name:
+                shutil.move(file, '65')
 
-        elif '85-P' in name:
-            shutil.move(file, '85')
+            elif '75-P' in name:
+                shutil.move(file, '75')
+
+            elif '85-P' in name:
+                shutil.move(file, '85')
 
 
-        # special case for X5.3 P72i tasks that don't follow conventional algo names
-        # slsd and slmd algo tasks get thrown in TR65 folder
+            # special case for X5.3 P72i tasks that don't follow conventional algo names
+            # slsd and slmd algo tasks get thrown in TR65 folder
 
-        elif 'slmd' in name or 'slsd' in name:
-            shutil.move(file, '65')
+            elif 'slmd' in name or 'slsd' in name:
+                shutil.move(file, '65')
 
 
     time.sleep(1/2)

@@ -193,23 +193,32 @@ for folder in ['COG', 'EPSM', 'SL']:
     for file in os.listdir():
         name = os.path.splitext(file)[0]
 
-        if 'MC' in name:
-            shutil.move(file, '75')
+        if folder == 'COG' and 'MC' in name or folder == 'EPSM' and 'MC' in name:
 
-        elif '65-P' in name and 'MC' not in name:
+            if 'P150' in name:
+                shutil.move(file, '65')
+
+            else:
+                threshold_start = name.index('dbdd') + 4
+                threshold = name[threshold_start: threshold_start + 2]
+                shutil.move(file, threshold)
+
+        if '65-P' in name:
             shutil.move(file, '65')
 
-        elif '75-P' in name and 'MC' not in name:
+        elif '75-P' in name:
             shutil.move(file, '75')
 
-        elif '85-P' in name and 'MC' not in name:
+        elif '85-P' in name:
             shutil.move(file, '85')
+
 
         # special case for X5.3 P72i tasks that don't follow conventional algo names
         # slsd and slmd algo tasks get thrown in TR65 folder
 
         elif 'slmd' in name or 'slsd' in name:
             shutil.move(file, '65')
+
 
     time.sleep(1/2)
 

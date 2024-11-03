@@ -1,7 +1,7 @@
 # 5XX RA Sort Python script
 
 >[!IMPORTANT]
-> All RA.txt files and the like are blank mock-ups used for demonstrating the usage and performance of the product. No company data was used in the making of this tool.
+> All RA.txt files and the like are blank mock-ups used for demonstrating the usage and performance of the product. No company data was published to this repository.
 
 >[!NOTE]
 >Please read if you are new to using python or need assistance with setting up your machine.

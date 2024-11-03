@@ -96,6 +96,7 @@ import sys      # command line argument handling
 import shutil   # high level file usage (copy, rename, etc)
 import glob     # filename pattern matching
 import time     # well maybe this one isn't really needed
+import datetime # timestamp RA backup folders
 
 
 
@@ -108,21 +109,11 @@ print(f'\nRunning script in current folder:\t{root}')
 
 print('\nCreating RA backup folder...\n')
 
-# if not os.path.exists('backup'):
-#     print(f'created folder:\t{root}\\backup\n')
-#     os.mkdir('backup')
-
-# if not os.listdir('backup'):
-#     for file in os.listdir(root):
-#         if os.path.isfile(file):
-#             shutil.copy(file, 'backup')
-
-
-# instead maybe should force the creation of a backup folder instead of checking for existence
-if not os.path.exists('backup'):
-    os.mkdir('RA-backup')
-    for file in glob.glob('*.txt'):
-        shutil.copy(file, 'backup')
+# running in root directory
+archive_folder = f'backup-{datetime.datetime.now().strftime('%Y-%m-%d')}'
+os.mkdir(archive_folder)
+for file in glob.glob('RA*.txt'):
+    shutil.copy(file, archive_folder)
 
 
 
@@ -292,7 +283,7 @@ if len(sys.argv) > 1:
 
     # still in excel dir while this loop is running
     for folder in os.listdir(root): # CETUS, COG, EPSM, SL      base folders
-        if folder == 'backup':
+        if 'backup' in folder:
             continue
 
         excel_book = glob.glob(f'*{folder}*.xlsx')[0]
@@ -312,23 +303,6 @@ if len(sys.argv) > 1:
             numRAs = len(glob.glob(f'{root}/{folder}/*.P0.*.txt'))
             if numRAs > 10:
                 shutil.copy(excel_book, f'{root}/{folder}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
-
-
-    # os.chdir(root)
-    # for folder in ['COG', 'EPSM', 'SL']:
-
-    #     excel_book = glob.glob(f'{root}/{folder}/*.xlsx')[0]
-
-    #     for thresholds in os.listdir(folder)[:-1]:
-    #             numRAs = len(glob.glob(f'{root}/{folder}/{thresholds}/*.P0.*.txt'))
-
-    #             shutil.copy(excel_book, f'{root}/{folder}/{thresholds}')
-
-    #             if numRAs > 10:
-    #                 # shutil.move(f'{root}/{folder}/{thresholds}/{excel_book}', f'{root}/{folder}/{thresholds}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
-    #                 shutil.copy(excel_book, f'{root}/{folder}/{thresholds}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
-
-    #     os.remove(f'{excel_book}')
 
 
 

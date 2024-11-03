@@ -1,6 +1,12 @@
 
-# Cody Costa    KLA ATE3
-# 10/24/24
+'''
+
+Author:     Cody Costa    
+Company:    KLA Corporation
+Title:      ATE3, 5XX BE LEAD
+Date:       10/24/24
+
+'''
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -85,9 +91,10 @@
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Needed Python Packages'''
 
-import os
-import sys
-import shutil
+import os       # filesystem manipulation
+import sys      # command line argument handling
+import shutil   # high level file usage (copy, rename, etc)
+import glob     # filename pattern matching
 import time     # well maybe this one isn't really needed
 
 
@@ -101,14 +108,21 @@ print(f'\nRunning script in current folder:\t{root}')
 
 print('\nCreating RA backup folder...\n')
 
-if not os.path.exists('backup'):
-    print(f'created folder:\t{root}\\backup\n')
-    os.mkdir('backup')
+# if not os.path.exists('backup'):
+#     print(f'created folder:\t{root}\\backup\n')
+#     os.mkdir('backup')
 
-if not os.listdir('backup'):
-    for file in os.listdir(root):
-        if os.path.isfile(file):
-            shutil.copy(file, 'backup')
+# if not os.listdir('backup'):
+#     for file in os.listdir(root):
+#         if os.path.isfile(file):
+#             shutil.copy(file, 'backup')
+
+
+# instead maybe should force the creation of a backup folder instead of checking for existence
+if not os.path.exists('backup'):
+    os.mkdir('RA-backup')
+    for file in glob.glob('*.txt'):
+        shutil.copy(file, 'backup')
 
 
 
@@ -263,7 +277,7 @@ for folder in base_folders:
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Optional inclusion to copy/move matching excel sheets into each folder'''
 
-# my excel folder (relative to root) is '../../blank-workbooks/'
+# my excel folder (relative to root) is '../blank-workbooks/'
 
 if len(sys.argv) > 1:
 
@@ -276,36 +290,45 @@ if len(sys.argv) > 1:
 
     excel_dir = os.getcwd()
 
+    # still in excel dir while this loop is running
     for folder in os.listdir(root): # CETUS, COG, EPSM, SL      base folders
-        os.chdir(f'{root}/{folder}')
+        if folder == 'backup':
+            continue
 
+        excel_book = glob.glob(f'*{folder}*.xlsx')[0]
+        destinations = glob.glob(f'{root}/{folder}/*/')
 
-        numRAs = sum(['.P0.' in file for file in os.listdir()])
+        print(f'copying {excel_book} to:\t\t{root}\\{folder}\\*')
 
-        os.chdir(excel_dir)
-        for file in os.listdir():
-            if folder in file:
-                print(f'copying {file} to:\t{root}\\{folder}\\*')
-                shutil.copy(file, f'{root}/{folder}')
-
+        if destinations:
+            for path in destinations:
+                numRAs = len(os.listdir(path))
+                shutil.copy(excel_book, path)
                 if numRAs > 10:
-                    shutil.move(f'{root}/{folder}/{file}', f'{root}/{folder}/{os.path.splitext(file)[0]}(2){os.path.splitext(file)[1]}')
-                    shutil.copy(file, f'{root}/{folder}')
+                    shutil.copy(excel_book, f'{path}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
 
-    os.chdir(root)
-    for folder in ['COG', 'EPSM', 'SL']:
+        else:
+            shutil.copy(excel_book, f'{root}/{folder}')
+            numRAs = len(glob.glob(f'{root}/{folder}/*.P0.*.txt'))
+            if numRAs > 10:
+                shutil.copy(excel_book, f'{root}/{folder}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
 
-        excel_book = os.listdir(folder)[-1]
 
-        for thresholds in os.listdir(folder)[:-1]:
-                shutil.copy(f'{root}/{folder}/{excel_book}', f'{root}/{folder}/{thresholds}')
+    # os.chdir(root)
+    # for folder in ['COG', 'EPSM', 'SL']:
 
-                # if len(os.listdir(f'{folder}/{thresholds}')) > 11:
-                if sum(['.P0.' in file for file in os.listdir(f'{folder}/{thresholds}')]) > 10:
-                    shutil.move(f'{root}/{folder}/{thresholds}/{excel_book}', f'{root}/{folder}/{thresholds}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
-                    shutil.copy(f'{root}/{folder}/{excel_book}', f'{root}/{folder}/{thresholds}')
+    #     excel_book = glob.glob(f'{root}/{folder}/*.xlsx')[0]
 
-        os.remove(f'{folder}/{excel_book}')
+    #     for thresholds in os.listdir(folder)[:-1]:
+    #             numRAs = len(glob.glob(f'{root}/{folder}/{thresholds}/*.P0.*.txt'))
+
+    #             shutil.copy(excel_book, f'{root}/{folder}/{thresholds}')
+
+    #             if numRAs > 10:
+    #                 # shutil.move(f'{root}/{folder}/{thresholds}/{excel_book}', f'{root}/{folder}/{thresholds}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
+    #                 shutil.copy(excel_book, f'{root}/{folder}/{thresholds}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
+
+    #     os.remove(f'{excel_book}')
 
 
 

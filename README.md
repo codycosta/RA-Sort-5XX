@@ -137,13 +137,32 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 <br>
 
 # How To Download RA-sort.py
-At the top of the page if you are reading this, click on RA-sort.py\
+## Stable Releases (Recommended)
+#### To get the latest and greatest version of the file I would recommend downloading the zip file from the Releases tab near the top of the page
+
+### 1. Click on releases
+![image](etc/readme-imgs/releases.png)
+<br>
+
+### 2. Click on either **Source code** button to download your preferred file format (zip for windows, tar.gz for linux)
+![image](etc/readme-imgs/mvp.png)
+<br>
+
+### This will drop a zip file of all of the repository's contents into your downloads folder. From here you can pick out RA-sort.py
+![image](etc/readme-imgs/download-zip.png)
+
+<br>
+<br>
+
+## Experimental Pre-releases
+### 1. At the top of the page if you are reading this, click on RA-sort.py
 ![image](etc/readme-imgs/file.png)
 <br>
 
-Next, on the top right of the file page, click the button to download raw file\
+### 2. Next, on the top right of the file page, click the button to download raw file
 ![image](etc/readme-imgs/download.png)
 <br>
+
 
 ### That's it, your file will be in your downloads folder
 <br>

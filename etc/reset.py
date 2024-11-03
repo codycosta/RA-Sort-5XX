@@ -4,10 +4,10 @@
 import os
 import shutil
 
-base_folders = ['CETUS', 'COG', 'EPSM', 'SL']
+# base_folders = ['CETUS', 'COG', 'EPSM', 'SL']
 
-for folder in base_folders:
-    if os.path.exists(folder):
+for folder in os.listdir():
+    if folder != 'backup':
         shutil.rmtree(folder)
 
 os.chdir('backup')

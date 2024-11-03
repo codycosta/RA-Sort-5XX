@@ -138,7 +138,8 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 
 # How To Download RA-sort.py
 ## Stable Releases (Recommended)
-#### To get the latest and greatest version of the file I would recommend downloading the zip file from the Releases tab near the top of the page
+>[!IMPORTANT]
+>To get the latest and greatest version of the file I would recommend downloading the zip file from the Releases tab near the top of the page
 
 ### 1. Click on releases
 ![image](etc/readme-imgs/releases.png)
@@ -155,6 +156,9 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 <br>
 
 ## Experimental Pre-releases
+>[!WARNING]
+>RA-sort.py may not perform as intended with pre-release versions
+
 ### 1. At the top of the page if you are reading this, click on RA-sort.py
 ![image](etc/readme-imgs/file.png)
 <br>
@@ -168,7 +172,7 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 <br>
 <br>
 
-# Priming Your Machine For Python
+# Setting Up Python
 ## Step 1: Make sure you have python installed (version 3.7 or later)
 Python can be downloaded from https://www.python.org/. I would recommend installing the latest version if you are unsure.\
 To check if your machine already has a version of python installed, simply press the windows key and search for 'python':\
@@ -186,10 +190,10 @@ First, keep your path to python handy, we will need it later.\
 
 You can find this located at: 
 ```powershell
-C:\Users\<USER>\AppData\Local\Programs\Python\Python312\
+C:\Users\<USER>\AppData\Local\Programs\Python\Python<3XX>\
 ```
 
-Just enter your USER name and substitute Python312 with whichever version you downloaded.\
+Just enter your USER name and substitute 3XX with whichever version you downloaded.\
 Python 3.13 is the latest release at the time of development.\
 <br>
 

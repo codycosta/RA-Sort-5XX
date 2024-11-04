@@ -286,14 +286,14 @@ if len(sys.argv) > 1:
         if 'backup' in folder:
             continue
 
-        excel_book = glob.glob(f'*{folder}*.xlsx')[0]
+        excel_book = glob.glob(f'*{folder}*.xls*')[0]
         destinations = glob.glob(f'{root}/{folder}/*/')
 
         print(f'copying {excel_book} to:\t\t{root}\\{folder}\\*')
 
         if destinations:
             for path in destinations:
-                numRAs = len(os.listdir(path))
+                numRAs = len(glob.glob(f'{path}/*.P0.*.txt'))
                 shutil.copy(excel_book, path)
                 if numRAs > 10:
                     shutil.copy(excel_book, f'{path}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')

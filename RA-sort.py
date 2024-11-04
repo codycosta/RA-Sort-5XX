@@ -267,7 +267,7 @@ for folder in base_folders:
                 print(f'removed folder:\t{os.getcwd()}\\{item}')
                 shutil.rmtree(item)
 
-        if not os.listdir(folder):
+        if not os.listdir():
             os.chdir(root)
             print(f'removed folder:\t{root}\\{folder}')
             shutil.rmtree(folder)

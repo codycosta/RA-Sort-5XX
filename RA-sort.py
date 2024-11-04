@@ -98,6 +98,8 @@ import glob     # filename pattern matching
 import time     # well maybe this one isn't really needed
 import datetime # timestamp RA backup folders
 
+time_start = datetime.datetime.now()
+
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,14 +109,18 @@ import datetime # timestamp RA backup folders
 root = os.getcwd()
 print(f'\nRunning script in current folder:\t{root}')
 
-print('\nCreating RA backup folder...\n')
-
 # running in root directory
 archive_folder = f'backup-{datetime.datetime.now().strftime('%Y-%m-%d')}'
-os.mkdir(archive_folder)
+
+if not os.path.exists(archive_folder):
+    print('\nCreating RA backup folder...\n')
+    print(f'created folder:\t{os.getcwd()}\\{archive_folder}\n')
+    os.mkdir(archive_folder)
+
 for file in glob.glob('RA*.txt'):
     shutil.copy(file, archive_folder)
 
+# time.sleep(1/8)
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,7 +135,7 @@ for folder in base_folders:
     if not os.path.exists(folder):
         print(f'created folder:\t{os.getcwd()}\\{folder}')
         os.mkdir(folder)
-        time.sleep(1/8)
+        # time.sleep(1/8)
 
 
 
@@ -147,7 +153,7 @@ for folder in ['COG', 'EPSM', 'SL']:
         if not os.path.exists(t):
             print(f'created folder:\t{os.getcwd()}\\{t}')
             os.mkdir(t)
-            time.sleep(1/8)
+            # time.sleep(1/8)
 
 
 
@@ -188,7 +194,7 @@ for file in os.listdir():
 '''Sort RA files into respective thresholds'''
 
 print('\n\nOrganizing CETUS data...\n')
-time.sleep(1/8)
+# time.sleep(1/8)
 
 for folder in ['COG', 'EPSM', 'SL']:
     os.chdir(f'{root}/{folder}')
@@ -231,7 +237,7 @@ for folder in ['COG', 'EPSM', 'SL']:
                 shutil.move(file, '65')
 
 
-    time.sleep(1/2)
+    # time.sleep(1/2)
 
 
 
@@ -305,11 +311,15 @@ if len(sys.argv) > 1:
                 shutil.copy(excel_book, f'{root}/{folder}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
 
 
+time_end = datetime.datetime.now()
+
+
 
 # display terminal message for when program finishes
 
 print(
-'''\n\n////////////////////////////////////////////\n
-PROCESS COMPLETED SUCCESSFULLY\n
+f'''\n\n////////////////////////////////////////////\n
+PROCESS COMPLETED SUCCESSFULLY!
+completed in {time_end - time_start} seconds\n
 ////////////////////////////////////////////\n'''
 )

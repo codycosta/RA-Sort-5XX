@@ -3,14 +3,19 @@
 
 import os
 import shutil
+import glob
 
 # base_folders = ['CETUS', 'COG', 'EPSM', 'SL']
+root = os.getcwd()
 
 for folder in os.listdir():
-    if folder != 'backup':
+    if 'backup' not in folder:
         shutil.rmtree(folder)
 
-os.chdir('backup')
+backup_folder = glob.glob('backup')[0]
+os.chdir(backup_folder)
+
+print(f'\nRestoring workspace from:\t{root}\\{backup_folder}\n')
 
 for file in os.listdir():
     shutil.copy(file, '../')

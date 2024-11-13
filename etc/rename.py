@@ -23,6 +23,9 @@ if not files_to_apply_changes:
 
 for file in files_to_apply_changes:
 
+    if substring_to_replace not in file:
+        continue
+
     # mark string slice to replace
     substring_index_start = file.index(substring_to_replace)
     substring_index_end = substring_index_start + len(substring_to_replace)

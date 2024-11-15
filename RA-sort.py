@@ -21,21 +21,18 @@ Date:       10/24/24
 #   RA-sort.py
 
 #   CETUS/
-
 #   COG/
-#   --> 65/
-#   --> 75/
-#   --> 85/
-
+#       |--> 65/
+#       |--> 75/
+#       |--> 85/
 #   EPSM/
-#   --> 65/
-#   --> 75/
-#   --> 85/
-
+#       |--> 65/
+#       |--> 75/
+#       |--> 85/
 #   SL/
-#   --> 65/
-#   --> 75/
-#   --> 85/
+#       |--> 65/
+#       |--> 75/
+#       |--> 85/
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -91,13 +88,33 @@ Date:       10/24/24
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Needed Python Packages'''
 
-import os       # filesystem manipulation
-import sys      # command line argument handling
-import shutil   # high level file usage (copy, rename, etc)
-import glob     # filename pattern matching
-import time     # well maybe this one isn't really needed
-import datetime # timestamp RA backup folders
+import os           # filesystem manipulation
+import sys          # command line argument handling
+import shutil       # high level file usage (copy, rename, etc)
+import glob         # filename pattern matching
+import time         # run timer
+import datetime     # timestamp RA backup folders
 
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Display Title Message'''
+
+print(
+r'''
+$$$$$$$\   $$$$$$\                                         $$\                             
+$$  __$$\ $$  __$$\                                        $$ |                            
+$$ |  $$ |$$ /  $$ |         $$$$$$$\  $$$$$$\   $$$$$$\ $$$$$$\        $$$$$$\  $$\   $$\ 
+$$$$$$$  |$$$$$$$$ |$$$$$$\ $$  _____|$$  __$$\ $$  __$$\\_$$  _|      $$  __$$\ $$ |  $$ |
+$$  __$$< $$  __$$ |\______|\$$$$$$\  $$ /  $$ |$$ |  \__| $$ |        $$ /  $$ |$$ |  $$ |
+$$ |  $$ |$$ |  $$ |         \____$$\ $$ |  $$ |$$ |       $$ |$$\     $$ |  $$ |$$ |  $$ |
+$$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  |\$$$$$$$ |
+\__|  \__|\__|  \__|        \_______/  \______/ \__|        \____/ \__|$$  ____/  \____$$ |
+                                                                       $$ |      $$\   $$ |
+                                                                       $$ |      \$$$$$$  |
+                                                                       \__|       \______/
+''')
+time.sleep(1)
 time_start = datetime.datetime.now()
 
 
@@ -120,7 +137,6 @@ if not os.path.exists(archive_folder):
 for file in glob.glob('RA*.txt'):
     shutil.copy(file, archive_folder)
 
-# time.sleep(1/8)
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +151,6 @@ for folder in base_folders:
     if not os.path.exists(folder):
         print(f'created folder:\t{os.getcwd()}\\{folder}')
         os.mkdir(folder)
-        # time.sleep(1/8)
 
 
 
@@ -153,7 +168,6 @@ for folder in ['COG', 'EPSM', 'SL']:
         if not os.path.exists(t):
             print(f'created folder:\t{os.getcwd()}\\{t}')
             os.mkdir(t)
-            # time.sleep(1/8)
 
 
 
@@ -194,7 +208,6 @@ for file in os.listdir():
 '''Sort RA files into respective thresholds'''
 
 print('\n\nOrganizing CETUS data...\n')
-# time.sleep(1/8)
 
 for folder in ['COG', 'EPSM', 'SL']:
     os.chdir(f'{root}/{folder}')
@@ -235,9 +248,6 @@ for folder in ['COG', 'EPSM', 'SL']:
 
             elif 'slmd' in name or 'slsd' in name:
                 shutil.move(file, '65')
-
-
-    # time.sleep(1/2)
 
 
 
@@ -287,8 +297,23 @@ if len(sys.argv) > 1:
 
     print(f'\n\ncmd argument given, user chose to copy excel workbooks to folders...\n')
 
-    os.chdir(root)
-    os.chdir(excel)
+    try:
+        os.chdir(root)
+        os.chdir(excel)
+    
+    except FileNotFoundError:
+        print(f'RA excel workbook folder \'{excel}\' not found, terminating program following RA sorting...\n')
+
+        print(
+f'''
+\n\n////////////////////////////////////////////\n
+PROCESS COMPLETED PARTIALLY!
+time elapsed:\t{datetime.datetime.now() - time_start}\n
+////////////////////////////////////////////\n
+''')
+
+        raise SystemExit
+
 
     excel_dir = os.getcwd()
 
@@ -297,23 +322,30 @@ if len(sys.argv) > 1:
         if 'backup' in folder:
             continue
 
-        excel_book = glob.glob(f'*{folder}*.xls*')[0]
-        destinations = glob.glob(f'{root}/{folder}/*/')
+        try:
+            excel_book = glob.glob(f'*{folder}*.xls*')[0]
 
-        print(f'copying {excel_book} to:\t\t{root}\\{folder}\\*')
-
-        if destinations:
-            for path in destinations:
-                numRAs = len(glob.glob(f'{path}/*.P0.*.txt'))
-                shutil.copy(excel_book, path)
-                if numRAs > 10:
-                    shutil.copy(excel_book, f'{path}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
+        except IndexError:
+            print(f'Excel book that matches {folder} scan type not found in provided excel folder...\n')
+            continue
 
         else:
-            shutil.copy(excel_book, f'{root}/{folder}')
-            numRAs = len(glob.glob(f'{root}/{folder}/*.P0.*.txt'))
-            if numRAs > 10:
-                shutil.copy(excel_book, f'{root}/{folder}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
+            destinations = glob.glob(f'{root}/{folder}/*/')
+
+            print(f'copying {excel_book} to:\t\t{root}\\{folder}\\*')
+
+            if destinations:
+                for path in destinations:
+                    numRAs = len(glob.glob(f'{path}/*.P0.*.txt'))
+                    shutil.copy(excel_book, path)
+                    if numRAs > 10:
+                        shutil.copy(excel_book, f'{path}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
+
+            else:
+                shutil.copy(excel_book, f'{root}/{folder}')
+                numRAs = len(glob.glob(f'{root}/{folder}/*.P0.*.txt'))
+                if numRAs > 10:
+                    shutil.copy(excel_book, f'{root}/{folder}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
 
 
 time_end = datetime.datetime.now()
@@ -323,8 +355,13 @@ time_end = datetime.datetime.now()
 # display terminal message for when program finishes
 
 print(
-f'''\n\n////////////////////////////////////////////\n
+f'''
+\n\n////////////////////////////////////////////\n
 PROCESS COMPLETED SUCCESSFULLY!
-completed in {time_end - time_start} seconds\n
-////////////////////////////////////////////\n'''
-)
+time elapsed:\t{time_end - time_start}\n
+////////////////////////////////////////////\n
+''')
+
+
+
+# eof

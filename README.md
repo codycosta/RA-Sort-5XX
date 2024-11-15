@@ -178,13 +178,17 @@ function [some function name] { py [your path to RA-sort.py] [your path to blank
 Be sure to include the entire filepath for both RA-sort.py and the blank workbook folders. Using the above example files/folders here's what my function would look like:
 
 ```powershell
-function pysort { py 'C:\Users\Cody\KLA_RA_scripts\RA-sort.py' 'C:\Users\Cody\KLA_RA_scripts\blank-workbooks' }
+function pysort {
+    py 'C:\Users\Cody\KLA_RA_scripts\RA-sort.py' 'C:\Users\Cody\KLA_RA_scripts\blank-workbooks'
+}
 ```
 
 >[!IMPORTANT]
-> Notice how my file and folder paths are wrapped in quotes ('' or "", doesn't matter)
-> This is necessary when your file or folder names have spaces (' ') in them, but is good practice to do anyway just in case.
-> Also note how at the end of blank-workbooks I did not include a slash. Listing it as ~/blank-workbooks/ will crash RA-sort.py as the OS cannot interpret the end of the folder name if you include the slash at the end
+> Notice how my file and folder paths are wrapped in quotes ('' or "", doesn't matter).\
+> This is necessary when your file or folder names have spaces (' ') in them, but is good practice to do anyway just in case.\
+> Also note how at the end of blank-workbooks I did not include a slash. Listing it as ~/blank-workbooks/ will crash RA-sort.py as the OS cannot interpret the end of the folder name if you include the slash at the end.
+
+<br>
 
 Great! Now we have a function to call RA-sort.py without having to pass any command arguments to the terminal when running. The next time you go to run the script on a data set, all you'll need to do is:
 
@@ -198,13 +202,15 @@ You can go ahead and save and close your notepad file now!
 
 ## Step 3: Set Your Windows Execution Policy
 
-Copy the below command to allow your terminal to load the $profile file we just made each time it opens:
+Copy the below command and run in any folder to allow your terminal to load the $profile file we just made each time it opens:
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-#### And that's all, your terminal should be ready for shortcutting
+You'll need to relaunch the terminal for changes to take effect
+
+### And that's all, your terminal should be ready for shortcutting
 
 <br>
 

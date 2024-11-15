@@ -12,7 +12,7 @@ for folder in os.listdir():
     if 'backup' not in folder:
         shutil.rmtree(folder)
 
-backup_folder = glob.glob('backup*')[0]
+backup_folder = glob.glob('backup*')[-1]    # get most recent if more than one exist
 os.chdir(backup_folder)
 
 print(f'\nRestoring workspace from:\t{root}\\{backup_folder}\n')

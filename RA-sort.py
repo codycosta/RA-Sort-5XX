@@ -98,6 +98,17 @@ import datetime     # timestamp RA backup folders
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''Functions for terminal message coloring'''
+
+def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
+
+def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
+
+def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
+
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Display Title Message'''
 
 print(
@@ -116,6 +127,8 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
 ''')
 time.sleep(1)
 time_start = datetime.datetime.now()
+
+err_flag = False
 
 
 
@@ -302,9 +315,11 @@ if len(sys.argv) > 1:
         os.chdir(excel)
     
     except FileNotFoundError:
-        print(f'RA excel workbook folder \'{excel}\' not found, terminating program following RA sorting...\n')
+        prRed(
+            f'RA excel workbook folder \'{excel}\' not found, terminating program following RA sorting...\n'
+        )
 
-        print(
+        prYellow(
 f'''
 \n\n////////////////////////////////////////////\n
 PROCESS COMPLETED PARTIALLY!
@@ -326,7 +341,10 @@ time elapsed:\t{datetime.datetime.now() - time_start}\n
             excel_book = glob.glob(f'*{folder}*.xls*')[0]
 
         except IndexError:
-            print(f'Excel book that matches {folder} scan type not found in provided excel folder...\n')
+            prRed(
+                f'Excel book that matches {folder} scan type not found in provided excel folder...\n'
+            )
+            err_flag = True
             continue
 
         else:
@@ -348,17 +366,24 @@ time elapsed:\t{datetime.datetime.now() - time_start}\n
                     shutil.copy(excel_book, f'{root}/{folder}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
 
 
-time_end = datetime.datetime.now()
-
-
 
 # display terminal message for when program finishes
 
-print(
+if not err_flag:
+    prGreen(
 f'''
 \n\n////////////////////////////////////////////\n
 PROCESS COMPLETED SUCCESSFULLY!
-time elapsed:\t{time_end - time_start}\n
+time elapsed:\t{datetime.datetime.now() - time_start}\n
+////////////////////////////////////////////\n
+''')
+
+else:
+    prYellow(
+f'''
+\n\n////////////////////////////////////////////\n
+PROCESS COMPLETED PARTIALLY!
+time elapsed:\t{datetime.datetime.now() - time_start}\n
 ////////////////////////////////////////////\n
 ''')
 

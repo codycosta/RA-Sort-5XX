@@ -103,7 +103,7 @@ To reference this folder we would run the following:
 
 or with the example file/folder names:
 
-~/Documents/5XX/SV_RA/ >      python ../RA-sort.py ../blank-workbooks
+~/Documents/5XX/SV_RA/ >     python ../RA-sort.py ../blank-workbooks
 ```
 
 >[!IMPORTANT]
@@ -133,8 +133,9 @@ and my copy of RA-sort.py stored in the previous folder:
 
 Keeping RA-sort.py close to the RA folder makes execution easy.\
 I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py which is in the previous folder:
-
-![image](etc/readme-imgs/cmd.png)
+```powershell
+~/KLA-RA-scripts/sample-RAs/ >     py ../RA-sort.py ../blank-workbooks
+```
 <br>
 <br>
 
@@ -144,7 +145,7 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 <br>
 
 ### After
-![image](etc/readme-imgs/cleaned-3.png)
+![image](etc/readme-imgs/cleaned-4.png)
 <br>
 <br>
 <br>
@@ -154,11 +155,11 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 >[!IMPORTANT]
 >To get the latest and greatest version of the file I would recommend downloading the zip file from the Releases tab near the top of the page
 
-### 1. Click on releases
+### 1. Click on releases (or the version with the attached 'Latest' tag)
 ![image](etc/readme-imgs/releases.png)
 <br>
 
-### 2. Click on either **Source code** button to download your preferred file format (zip for windows, tar.gz for linux)
+### 2. Click on either **Source code** button to download your preferred file format, both are essentially zip files
 ![image](etc/readme-imgs/mvp.png)
 <br>
 

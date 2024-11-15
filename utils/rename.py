@@ -1,4 +1,6 @@
 
+# utility script to rename files in bulk, useful for consistent typos and incorrect labeling
+
 import shutil
 import glob
 import sys

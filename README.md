@@ -31,7 +31,7 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
 
 # Usage
 
-### Step 0: Launch a terminal environment
+### Step 0: Launch a Terminal
 #### Any terminal you have installed will work (cmd, bash, powershell, etc...)
 
 <br>
@@ -52,6 +52,7 @@ For example let's say we have some RA's that exist in the following folder:
 ```powershell
 ~/Documents/5XX/SV_RA/
 ```
+
 <br>
 
 ### Step 2: Run RA-sort.py
@@ -148,6 +149,63 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 ![image](etc/readme-imgs/cleaned-4.png)
 <br>
 <br>
+<br>
+
+# Life Hack To Save Time
+If rerunning this script using the above command line arguments gets boring and repetitive, here's a shortcut to help you speed things up by assigning a powershell function to serve as an alias for the command:
+
+### Step 0: Launch a terminal
+
+<br>
+
+### Step 1: Open Your Powershell $PROFILE script
+to do this just run the following in any folder in the terminal:
+
+```powershell
+notepad $profile
+```
+this should launch the profile script in none other than the windows notepad app
+
+<br>
+
+### Step 2: Create A Powershell Function
+This is easy to do. Here's the basic template. Type this out in your notebook $profile window 
+
+```powershell
+function [some function name] { py [your path to RA-sort.py] [your path to blank excel workbooks] }
+```
+
+Be sure to include the entire filepath for both RA-sort.py and the blank workbook folders. Using the above example files/folders here's what my function would look like:
+
+```powershell
+function pysort { py 'C:\Users\Cody\KLA_RA_scripts\RA-sort.py' 'C:\Users\Cody\KLA_RA_scripts\blank-workbooks' }
+```
+
+>[!IMPORTANT]
+> Notice how my file and folder paths are wrapped in quotes ('' or "", doesn't matter)
+> This is necessary when your file or folder names have spaces (' ') in them, but is good practice to do anyway just in case.
+> Also note how at the end of blank-workbooks I did not include a slash. Listing it as ~/blank-workbooks/ will crash RA-sort.py as the OS cannot interpret the end of the folder name if you include the slash at the end
+
+Great! Now we have a function to call RA-sort.py without having to pass any command arguments to the terminal when running. The next time you go to run the script on a data set, all you'll need to do is:
+
+```powershell
+~/KLA-RA-scripts/sample-RAs/ >     pysort
+```
+
+You can go ahead and save and close your notepad file now!
+
+<br>
+
+## Step 3: Set Your Windows Execution Policy
+
+Copy the below command to allow your terminal to load the $profile file we just made each time it opens:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+#### And that's all, your terminal should be ready for shortcutting
+
 <br>
 
 # How To Download RA-sort.py

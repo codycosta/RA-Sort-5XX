@@ -197,6 +197,7 @@ Great! Now we have a function to call RA-sort.py without having to pass any comm
 ```
 
 You can go ahead and save and close your notepad file now!
+You'll need to relaunch the terminal for changes to take effect.
 
 <br>
 
@@ -210,7 +211,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 You'll need to relaunch the terminal for changes to take effect
 
->![WARNING]
+>[!WARNING]
 > I would recommend testing the script first and seeing some success before assigning an alias function.\
 > This ensures your spelling is correct and you have verified the files and folders arguments passed to the function are acceptable.
 

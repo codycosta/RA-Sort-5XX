@@ -95,6 +95,8 @@ import glob         # filename pattern matching
 import time         # run timer
 import datetime     # timestamp RA backup folders
 
+os.system('')       # inject null character to terminal handler to reset ANSI bug for color coding
+
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +125,7 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
 \__|  \__|\__|  \__|        \_______/  \______/ \__|        \____/ \__|$$  ____/  \____$$ |
                                                                        $$ |      $$\   $$ |
                                                                        $$ |      \$$$$$$  |
-                                                                       \__|       \______/
+                                                                       \__|       \______/      v1.2.1
 ''')
 time.sleep(1)
 time_start = datetime.datetime.now()

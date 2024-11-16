@@ -107,7 +107,7 @@ or with the example file/folder names:
 ~/Documents/5XX/SV_RA/ >     python ../RA-sort.py ../blank-workbooks
 ```
 
->[!IMPORTANT]
+>[!WARNING]
 >If you would like to do this, make sure that each of your blank excel workbooks at least has 'COG', 'EPSM', 'CETUS' and 'SL' in the name.
 <br>
 
@@ -175,7 +175,7 @@ This is easy to do. Here's the basic template. Type this out in your notebook $p
 function [some function name] { py [your path to RA-sort.py] [your path to blank excel workbooks] }
 ```
 
-Be sure to include the entire filepath for both RA-sort.py and the blank workbook folders. Using the above example files/folders here's what my function would look like:
+#### Be sure to include the entire filepath for both RA-sort.py and the blank workbook folders. Using the above example files/folders here's what my function would look like:
 
 ```powershell
 function pysort {
@@ -184,7 +184,7 @@ function pysort {
 ```
 
 >[!IMPORTANT]
-> Notice how my file and folder paths are wrapped in quotes ('' or "", doesn't matter).\
+> Notice how my file and folder paths are wrapped in **quotes** ('' or "", doesn't matter).\
 > This is necessary when your file or folder names have spaces (' ') in them, but is good practice to do anyway just in case.\
 > Also note how at the end of blank-workbooks I did not include a slash. Listing it as ~/blank-workbooks/ will crash RA-sort.py as the OS cannot interpret the end of the folder name if you include the slash at the end.
 
@@ -210,8 +210,15 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 You'll need to relaunch the terminal for changes to take effect
 
+>![WARNING]
+> I would recommend testing the script first and seeing some success before assigning an alias function.\
+> This ensures your spelling is correct and you have verified the files and folders arguments passed to the function are acceptable.
+
+
+
 ### And that's all, your terminal should be ready for shortcutting
 
+<br>
 <br>
 
 # How To Download RA-sort.py

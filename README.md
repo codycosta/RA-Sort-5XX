@@ -28,6 +28,7 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
 
 <br>
 <br>
+<br>
 
 # Usage
 
@@ -120,27 +121,34 @@ When organizing the excel workbooks, RA-sort.py will count the number of RA P0 f
 <br>
 
 ## Example
-In the below photos you can see I have some RA files stored in:
+During testing, I stored some mock RA files in the following folder:
 ```powershell
 ~/KLA-RA-scripts/sample-RAs/
 ```
 <br>
 
-and my copy of RA-sort.py stored in the previous folder:
+My copy of RA-sort.py was stored in the previous folder:
 ```powershell
 ~/KLA-RA-scripts/RA-sort.py
 ```
 <br>
 
-Keeping RA-sort.py close to the RA folder makes execution easy.\
-I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py which is in the previous folder:
+And my blank excel workbooks in the following folder:
+```powershell
+~/KLA-RA-scripts/blank-workbooks/
+```
+<br>
+<br>
+
+### Keeping RA-sort.py close to the RA folder makes execution easy. I just need to navigate to my RA folder and call on RA-sort.py:
 ```powershell
 ~/KLA-RA-scripts/sample-RAs/ >     py ../RA-sort.py ../blank-workbooks
 ```
 <br>
 <br>
+<br>
 
-### Before
+<!-- ### Before
 ![image](etc/readme-imgs/cluttered-folder.png)
 <br>
 <br>
@@ -149,12 +157,15 @@ I just need to navigate to my RA folder (samlple-RAs) and call on RA-sort.py whi
 ![image](etc/readme-imgs/cleaned-4.png)
 <br>
 <br>
-<br>
+<br> -->
 
-# Life Hack To Save Time
+# Optional: Creating A Profile Function Shortcut
+## Recommended if repeated use gets tedious
+
 If rerunning this script using the above command line arguments gets boring and repetitive, here's a shortcut to help you speed things up by assigning a powershell function to serve as an alias for the command:
 
-### Step 0: Launch a terminal
+### Step 0: Launch a Terminal
+You know how to do this already...
 
 <br>
 
@@ -169,7 +180,7 @@ this should launch the profile script in none other than the windows notepad app
 <br>
 
 ### Step 2: Create A Powershell Function
-This is easy to do. Here's the basic template. Type this out in your notebook $profile window 
+This is easy to do. Here's the basic template. Type this out in your notepad $profile window 
 
 ```powershell
 function [some function name] { py [your path to RA-sort.py] [your path to blank excel workbooks] }
@@ -221,6 +232,7 @@ You'll need to relaunch the terminal for changes to take effect
 
 <br>
 <br>
+<br>
 
 # How To Download RA-sort.py
 ## Stable Releases (Recommended)
@@ -255,10 +267,12 @@ You'll need to relaunch the terminal for changes to take effect
 
 
 ### That's it, your file will be in your downloads folder
+
+<br>
 <br>
 <br>
 
-# Setting Up Python
+# Getting Started With Python
 ## Step 1: Make sure you have python installed (version 3.7 or later)
 Python can be downloaded from https://www.python.org/. I would recommend installing the latest version if you are unsure.\
 To check if your machine already has a version of python installed, simply press the windows key and search for 'python':\

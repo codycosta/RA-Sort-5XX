@@ -216,7 +216,7 @@ You'll need to relaunch the terminal for changes to take effect.
 
 <br>
 
-## Step 3: Set Your Windows Execution Policy
+### Step 3: Set Your Windows Execution Policy
 
 Copy the below command and run in any folder to allow your terminal to load the $profile file we just made each time it opens:
 

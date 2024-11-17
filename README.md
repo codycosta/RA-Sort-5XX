@@ -201,7 +201,7 @@ function pysort {
 
 <br>
 
-Great! Now we have a function to call RA-sort.py without having to pass any command arguments to the terminal when running. The next time you go to run the script on a data set, all you'll need to do is:
+Great! Now we have a function to call RA-sort.py without having to pass any command arguments to the terminal when running. The next time you go to run the script on a data set, all you'll need to do is call the function name:
 
 ```powershell
 ~/KLA-RA-scripts/sample-RAs/ >     pysort
@@ -209,6 +209,10 @@ Great! Now we have a function to call RA-sort.py without having to pass any comm
 
 You can go ahead and save and close your notepad file now!
 You'll need to relaunch the terminal for changes to take effect.
+
+>[!WARNING]
+> I would recommend testing the script first and seeing some success before assigning an alias function.\
+> This ensures your spelling is correct and you have verified the files and folders arguments passed to the function are acceptable.
 
 <br>
 
@@ -221,12 +225,6 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
 You'll need to relaunch the terminal for changes to take effect
-
->[!WARNING]
-> I would recommend testing the script first and seeing some success before assigning an alias function.\
-> This ensures your spelling is correct and you have verified the files and folders arguments passed to the function are acceptable.
-
-
 
 ### And that's all, your terminal should be ready for shortcutting
 

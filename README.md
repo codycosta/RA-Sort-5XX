@@ -13,11 +13,11 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
                                                                        \__|       \______/
 ```
 
->[!IMPORTANT]
-> All RA.txt files and the like are blank mock-ups used for demonstrating the usage and performance of the product. No company data was published to this repository.
+<!-- >[!IMPORTANT]
+> All RA.txt files and the like are blank mock-ups used for demonstrating the usage and performance of the product. No company data was published to this repository. -->
 
->[!NOTE]
->Please read if you are new to using python or need assistance with setting up your machine.
+>[!IMPORTANT]
+>Please read if you are new to using python, new to terminal scripting, or need assistance with setting up your machine.
 
 >[!NOTE]
 >RA-sort.py will automatically create a backup folder to dump a copy of all RA files into before sorting. This way if something were to go wrong during execution, or you as the user are unhappy with the results, there is a safe restore point to reset the folder to how it started.

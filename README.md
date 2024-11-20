@@ -13,6 +13,15 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
                                                                        \__|       \______/
 ```
 
+# Quick Section Links
+
+[Script Usage](#usage)\
+[PowerShell Shortcuts](#optional-creating-a-profile-function-shortcut)\
+[Download Options](#how-to-download-ra-sortpy)\
+[Setting up Python](#getting-started-with-python)
+
+<br>
+
 <!-- >[!IMPORTANT]
 > All RA.txt files and the like are blank mock-ups used for demonstrating the usage and performance of the product. No company data was published to this repository. -->
 

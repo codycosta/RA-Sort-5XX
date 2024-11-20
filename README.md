@@ -15,10 +15,10 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
 
 # Quick Section Links
 
-[Script Usage](#usage)\
-[PowerShell Shortcuts](#optional-creating-a-profile-function-shortcut)\
-[Download Options](#how-to-download-ra-sortpy)\
-[Setting up Python](#getting-started-with-python)
+### [Script Usage](#usage)
+### [PowerShell Shortcuts](#optional-creating-a-profile-function-shortcut)
+### [Download Options](#how-to-download-ra-sortpy)
+### [Setting up Python](#getting-started-with-python)
 
 <br>
 

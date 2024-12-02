@@ -110,7 +110,11 @@ def prGreen(skk):
 def prYellow(skk): 
     print(f"\033[93m {skk}\033[00m")
 
-def display_exit_logs(checkpoints):
+def prCyan(skk): 
+    print(f"\033[96m {skk}\033[00m")
+
+
+def display_exit_logs():
     err_flag = False
     for val in checkpoints.values():
         if not val:
@@ -133,6 +137,8 @@ PROCESS COMPLETED PARTIALLY!
 time elapsed:\t{datetime.datetime.now() - time_start}\n
 ********************************************
 ''')
+        
+    print('Critical Operations:\n')
 
     for check in checkpoints.keys():
         if checkpoints[check]:
@@ -174,7 +180,7 @@ err_flag = False
 # record root directory location (folder the script was run in)
 root = os.getcwd()
 src_backup = False
-print(f'\nRunning script in current folder:\t{root}\n')
+prYellow(f'\nRunning script in current folder:\t{root}\n')
 
 # running in root directory
 archive_folder = f'backup-{datetime.datetime.now().strftime('%Y-%m-%d')}'
@@ -199,7 +205,7 @@ if os.listdir(f'{root}/{archive_folder}'):
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Create base and threshold folders'''
 
-print('\nCreating base and threshold folders...\n')
+prCyan('\nCreating base and threshold folders...\n')
 
 base_folders = ['CETUS', 'COG', 'EPSM', 'SL']
 thresholds = ['65', '75', '85']
@@ -240,6 +246,8 @@ if folder_total == 13:
 # list files in parent directory and separate into base folders
 base_sort = True
 os.chdir(root)
+prCyan('\n\nOrganizing RA data...')
+
 for file in os.listdir():
     
     if not os.path.splitext(file)[1]:
@@ -279,7 +287,7 @@ if glob.glob(f'{root}/RA*.txt'):
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Sort RA files into respective thresholds'''
 
-print('\n\nOrganizing CETUS data...')
+print('\nOrganizing CETUS data...')
 
 thresh_sort = True
 for folder in ['COG', 'EPSM', 'SL']:
@@ -331,7 +339,7 @@ for folder in ['COG', 'EPSM', 'SL']:
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Delete any empty folders'''
 
-print('\n\nRemoving any empty directories...\n')
+prCyan('\n\nRemoving any empty directories...\n')
 os.chdir(root)
 rm_empty = True
 
@@ -362,12 +370,14 @@ for folder in os.listdir(root):
                 prYellow(f'Found empty folder:\t{root}\\{folder}\\{t}')
 
 checkpoints = {
-    'backup folder': src_backup, 
-    'destinations': src_dests, 
-    'base sorting': base_sort, 
-    'spec sorting': thresh_sort, 
-    'empty delete': rm_empty,
+    'RA backup folder': src_backup, 
+    'RA destinations': src_dests, 
+    'RA base sorting': base_sort, 
+    'RA spec sorting': thresh_sort, 
+    'rm empty folders': rm_empty,
 }
+
+
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Optional inclusion to copy/move matching excel sheets into each folder'''
@@ -376,29 +386,20 @@ checkpoints = {
 excel_copied = True
 if len(sys.argv) > 1:
 
-    checkpoints = {
-        'backup folder': src_backup, 
-        'destinations': src_dests, 
-        'base sorting': base_sort, 
-        'spec sorting': thresh_sort, 
-        'empty delete': rm_empty, 
-        'excel copied': excel_copied
-    }
+    checkpoints['excel files copied'] = excel_copied
 
     excel = sys.argv[1]
 
-    print(f'\n\nCopying excel workbooks...\n')
+    prCyan(f'\n\nCopying excel workbooks...\n')
 
     try:
         os.chdir(root)
         os.chdir(excel)
     
     except FileNotFoundError:
-        prRed(
-            f'RA excel workbook folder \'{excel}\' not found, terminating program here...\n'
-        )
-        checkpoints['excel copied'] = False
-        display_exit_logs(checkpoints)
+        prRed(f'RA excel workbook folder \'{excel}\' not found, terminating program here...\n')
+        checkpoints['excel files copied'] = False
+        display_exit_logs()
         raise SystemExit
 
 
@@ -413,15 +414,13 @@ if len(sys.argv) > 1:
             excel_book = glob.glob(f'*{folder.casefold()}*.xls*')[0]
 
         except IndexError:
-            prRed(
-                f'Excel book that matches {folder} scan type not found in provided excel folder...\n'
-            )
-            checkpoints['excel copied'] = False
+            prRed(f'Excel book that matches {folder} scan type not found in provided excel folder...\n')
+            checkpoints['excel files copied'] = False
 
         else:
             destinations = glob.glob(f'{root}/{folder}/*/')
 
-            print(f'copying {excel_book} to:\t\t{root}\\{folder}\\*')
+            print(f'copied {excel_book} to:\t\t{root}\\{folder}\\*')
 
             if destinations:
                 for path in destinations:
@@ -441,5 +440,5 @@ if len(sys.argv) > 1:
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''display terminal message for when program finishes'''
 
-display_exit_logs(checkpoints)
+display_exit_logs()
 # eof

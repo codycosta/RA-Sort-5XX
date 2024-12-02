@@ -1,4 +1,3 @@
-
 '''
 
 Author:     Cody Costa    
@@ -100,13 +99,48 @@ os.system('')       # inject null character to terminal handler to reset ANSI bu
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Functions for terminal message coloring'''
+'''Functions for terminal message coloring and exit logs'''
 
-def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
+def prRed(skk): 
+    print(f"\033[91m {skk}\033[00m")
 
-def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
+def prGreen(skk): 
+    print(f"\033[92m {skk}\033[00m")
 
-def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
+def prYellow(skk): 
+    print(f"\033[93m {skk}\033[00m")
+
+def display_exit_logs(checkpoints):
+    err_flag = False
+    for val in checkpoints.values():
+        if not val:
+            err_flag = True
+
+    if not err_flag:
+        prGreen(
+f'''
+\n\n********************************************\n
+PROCESS COMPLETED SUCCESSFULLY!
+time elapsed:\t{datetime.datetime.now() - time_start}\n
+********************************************
+''')
+
+    else:
+        prYellow(
+f'''
+\n\n********************************************\n
+PROCESS COMPLETED PARTIALLY!
+time elapsed:\t{datetime.datetime.now() - time_start}\n
+********************************************
+''')
+
+    for check in checkpoints.keys():
+        if checkpoints[check]:
+            prGreen(f'{check}:\tPASSED')
+        else:
+            prRed(f'{check}:\tFAILED')
+    print()
+
 
 
 
@@ -125,7 +159,7 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
 \__|  \__|\__|  \__|        \_______/  \______/ \__|        \____/ \__|$$  ____/  \____$$ |
                                                                        $$ |      $$\   $$ |
                                                                        $$ |      \$$$$$$  |
-                                                                       \__|       \______/      v1.2.1
+                                                                       \__|       \______/      v1.2.4
 ''')
 time.sleep(1)
 time_start = datetime.datetime.now()
@@ -139,7 +173,8 @@ err_flag = False
 
 # record root directory location (folder the script was run in)
 root = os.getcwd()
-print(f'\nRunning script in current folder:\t{root}')
+src_backup = False
+print(f'\nRunning script in current folder:\t{root}\n')
 
 # running in root directory
 archive_folder = f'backup-{datetime.datetime.now().strftime('%Y-%m-%d')}'
@@ -149,40 +184,53 @@ if not os.path.exists(archive_folder):
     print(f'created folder:\t{os.getcwd()}\\{archive_folder}\n')
     os.mkdir(archive_folder)
 
+else:
+    prYellow(f'Existing backup folder found:\t{root}\\{archive_folder}\n')
+
 for file in glob.glob('RA*.txt'):
     shutil.copy(file, archive_folder)
 
+# checkpoint validation
+if os.listdir(f'{root}/{archive_folder}'):
+    src_backup = True
+
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Create base folders for scan types'''
+'''Create base and threshold folders'''
 
-print('\nCreating base folders...\n')
+print('\nCreating base and threshold folders...\n')
 
-# create new base folders [CETUS, COG, EPSM, SL]
 base_folders = ['CETUS', 'COG', 'EPSM', 'SL']
+thresholds = ['65', '75', '85']
+folder_total = 0
+src_dests = False
 
 for folder in base_folders:
+
     if not os.path.exists(folder):
-        print(f'created folder:\t{os.getcwd()}\\{folder}')
         os.mkdir(folder)
+        print(f'created folder:\t{root}\\{folder}')
+    else:
+        prYellow(f'Exsiting folder found:\t{root}\\{folder}')
+    
+    folder_total += 1
 
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Create COG, EPSM, SL threshold folders'''
-
-thresholds = ['65', '75', '85']
-
-for folder in ['COG', 'EPSM', 'SL']:
-    os.chdir(f'{root}/{folder}')
-
-    print(f'\n\nCreating {folder} thresholds...\n')
+    if folder == 'CETUS':
+        continue
 
     for t in thresholds:
-        if not os.path.exists(t):
-            print(f'created folder:\t{os.getcwd()}\\{t}')
-            os.mkdir(t)
+        if not os.path.exists(f'{root}\\{folder}\\{t}'):
+            print(f'created folder:\t{root}\\{folder}\\{t}')
+            os.mkdir(f'{root}\\{folder}\\{t}')
+        else:
+            prYellow(f'Existing folder found:\t{root}\\{folder}\\{t}')
+
+        folder_total += 1
+    
+# checkpoint validation
+if folder_total == 13:
+    src_dests = True
 
 
 
@@ -190,9 +238,13 @@ for folder in ['COG', 'EPSM', 'SL']:
 '''Sort RA files first into base directory destinations'''
 
 # list files in parent directory and separate into base folders
+base_sort = True
 os.chdir(root)
 for file in os.listdir():
     
+    if not os.path.splitext(file)[1]:
+        continue
+
     name = os.path.splitext(file)[0]
 
     # CETUS
@@ -201,33 +253,39 @@ for file in os.listdir():
 
     elif 'SPICA200V7' in name:
 
-        # STARLIGHT
-        if 'UXRsl' in name or 'sl' in name and '-SL-' in name:
-            shutil.move(file, 'SL')
-
         # COG
         if 'COG' in name or '260C-' in name or '320C-' in name or '400C-' in name:
             shutil.move(file, 'COG')
 
         # EPSM
         if 'EPSM' in name or '260E-' in name or '320E-' in name or '400E-' in name:
-            if 'sl' not in name:
+
+            # STARLIGHT
+            if 'UXRsl' in name or 'sl' in name and '-SL-' in name:
+                shutil.move(file, 'SL')
+
+            else:
                 shutil.move(file, 'EPSM')
 
-            elif 'sl' in name and '-D2D-' in name or 'sl' in name and '-DDB-' in name:
-                shutil.move(file, 'EPSM')
+    elif 'RA' not in name and '.txt' not in name:
+        prRed(f'Invalid filename {file} unable to be sorted')
+
+# checkpoint validation
+if glob.glob(f'{root}/RA*.txt'):
+    base_sort = False
 
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Sort RA files into respective thresholds'''
 
-print('\n\nOrganizing CETUS data...\n')
+print('\n\nOrganizing CETUS data...')
 
+thresh_sort = True
 for folder in ['COG', 'EPSM', 'SL']:
     os.chdir(f'{root}/{folder}')
 
-    print(f'Organizing {folder} thresholds...\n')
+    print(f'Organizing {folder} thresholds...')
 
     for file in os.listdir():
         name = os.path.splitext(file)[0]
@@ -264,53 +322,72 @@ for folder in ['COG', 'EPSM', 'SL']:
             elif 'slmd' in name or 'slsd' in name:
                 shutil.move(file, '65')
 
+    # checkpoint validation
+    if glob.glob(f'{root}/{folder}/RA*.txt'):
+        thresh_sort = False
+
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Delete any empty folders'''
 
-print('\nRemoving any empty directories...\n')
+print('\n\nRemoving any empty directories...\n')
 os.chdir(root)
+rm_empty = True
 
-for folder in base_folders:
+def delete_empty_folders(root):
+    try:
+        for item in os.listdir(root):
+            if not os.path.splitext(item)[1]:
+                delete_empty_folders(f'{root}/{item}')
 
-    # check base folders for emptiness
-    if not os.listdir(folder):
-        print(f'removed folder:\t{root}\\{folder}')
-        shutil.rmtree(folder)
+    except FileNotFoundError as e:
+        prRed(root, os.listdir(root), e)
+    
+    if not os.listdir(root):
+        print(f'removed folder:\t{root}')
+        shutil.rmtree(root)
 
-    else:
-        os.chdir(folder)
+delete_empty_folders(root)
 
-        # check thresholds for emptiness
-        for item in os.listdir():
+# checkpoint validation
+for folder in os.listdir(root):
+    if not os.listdir(f'{root}/{folder}'):
+        rm_empty = False
+        prYellow(f'Found empty folder:\t{root}\\{folder}')
+    for t in os.listdir(f'{root}/{folder}'):
+        if not os.path.splitext(t)[1]:
+            if not os.listdir(f'{root}/{folder}/{t}'):
+                rm_empty = False
+                prYellow(f'Found empty folder:\t{root}\\{folder}\\{t}')
 
-            if os.path.splitext(item)[1] == '.txt':
-                continue
-            
-            if not os.listdir(item):
-                print(f'removed folder:\t{os.getcwd()}\\{item}')
-                shutil.rmtree(item)
-
-        if not os.listdir():
-            os.chdir(root)
-            print(f'removed folder:\t{root}\\{folder}')
-            shutil.rmtree(folder)
-
-    os.chdir(root)
-
-
+checkpoints = {
+    'backup folder': src_backup, 
+    'destinations': src_dests, 
+    'base sorting': base_sort, 
+    'spec sorting': thresh_sort, 
+    'empty delete': rm_empty,
+}
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////
 '''Optional inclusion to copy/move matching excel sheets into each folder'''
 
 # my excel folder (relative to root) is '../blank-workbooks/'
-
+excel_copied = True
 if len(sys.argv) > 1:
+
+    checkpoints = {
+        'backup folder': src_backup, 
+        'destinations': src_dests, 
+        'base sorting': base_sort, 
+        'spec sorting': thresh_sort, 
+        'empty delete': rm_empty, 
+        'excel copied': excel_copied
+    }
 
     excel = sys.argv[1]
 
-    print(f'\n\ncmd argument given, user chose to copy excel workbooks to folders...\n')
+    print(f'\n\nCopying excel workbooks...\n')
 
     try:
         os.chdir(root)
@@ -318,17 +395,10 @@ if len(sys.argv) > 1:
     
     except FileNotFoundError:
         prRed(
-            f'RA excel workbook folder \'{excel}\' not found, terminating program following RA sorting...\n'
+            f'RA excel workbook folder \'{excel}\' not found, terminating program here...\n'
         )
-
-        prYellow(
-f'''
-\n\n////////////////////////////////////////////\n
-PROCESS COMPLETED PARTIALLY!
-time elapsed:\t{datetime.datetime.now() - time_start}\n
-////////////////////////////////////////////\n
-''')
-
+        checkpoints['excel copied'] = False
+        display_exit_logs(checkpoints)
         raise SystemExit
 
 
@@ -340,14 +410,13 @@ time elapsed:\t{datetime.datetime.now() - time_start}\n
             continue
 
         try:
-            excel_book = glob.glob(f'*{folder}*.xls*')[0]
+            excel_book = glob.glob(f'*{folder.casefold()}*.xls*')[0]
 
         except IndexError:
             prRed(
                 f'Excel book that matches {folder} scan type not found in provided excel folder...\n'
             )
-            err_flag = True
-            continue
+            checkpoints['excel copied'] = False
 
         else:
             destinations = glob.glob(f'{root}/{folder}/*/')
@@ -369,26 +438,8 @@ time elapsed:\t{datetime.datetime.now() - time_start}\n
 
 
 
-# display terminal message for when program finishes
+# //////////////////////////////////////////////////////////////////////////////////////////////////////
+'''display terminal message for when program finishes'''
 
-if not err_flag:
-    prGreen(
-f'''
-\n\n////////////////////////////////////////////\n
-PROCESS COMPLETED SUCCESSFULLY!
-time elapsed:\t{datetime.datetime.now() - time_start}\n
-////////////////////////////////////////////\n
-''')
-
-else:
-    prYellow(
-f'''
-\n\n////////////////////////////////////////////\n
-PROCESS COMPLETED PARTIALLY!
-time elapsed:\t{datetime.datetime.now() - time_start}\n
-////////////////////////////////////////////\n
-''')
-
-
-
+display_exit_logs(checkpoints)
 # eof

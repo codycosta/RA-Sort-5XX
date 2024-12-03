@@ -41,22 +41,22 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
 
 # Usage
 
-### Step 0: Launch a Terminal
+## Step 0: Launch a Terminal
 #### Any terminal you have installed will work (cmd, bash, powershell, etc...)
 
 <br>
 
 The default windows terminal on our KLA machines is Windows Command Prompt. To launch this just press the windows key and type 'cmd':\
-![image](etc/readme-imgs/cmd-terminal.png)
+![image](src/readme-imgs/cmd-terminal.png)
 
 <br>
 
 To elevate your terminal game, I'd recommend using Powershell rather then Command Prompt, which can be easily found in the same fashion by searching for Powershell at the windows start menu:\
-![image](etc/readme-imgs/powershell.png)
+![image](src/readme-imgs/powershell.png)
 
 <br>
 
-### Step 1: Navigate to RA folder
+## Step 1: Navigate to RA folder
 For example let's say we have some RA's that exist in the following folder:
 
 ```powershell
@@ -65,7 +65,7 @@ For example let's say we have some RA's that exist in the following folder:
 
 <br>
 
-### Step 2: Run RA-sort.py
+## Step 2: Run RA-sort.py
 Let's say we downloaded and moved RA-sort.py to the following folder. Continue to the next section for download instructions.
 
 ```powershell
@@ -94,8 +94,7 @@ or with the example file/folder names:
 
 <br>
 
-## Optional
-### Step 3: Organize excel along with RA's
+## Optional Step 3: Organize Excel files along with RA files
 
 You can also elect to have the script copy and organize your excel workbooks along with the RA files.\
 To do this, after calling RA-sort.py, add an extra argument that references the path to the blank workbook folder.\
@@ -149,10 +148,11 @@ And my blank excel workbooks in the following folder:
 <br>
 <br>
 
-### Keeping RA-sort.py close to the RA folder makes execution easy. I just need to navigate to my RA folder and call on RA-sort.py:
+### Executing RA-sort.py on my end would look like this:
 ```powershell
 ~/KLA-RA-scripts/sample-RAs/ >     py ../RA-sort.py ../blank-workbooks
 ```
+easy peasy :)
 <br>
 <br>
 <br>
@@ -168,18 +168,27 @@ And my blank excel workbooks in the following folder:
 <br>
 <br> -->
 
-# Optional: Creating A Profile Function Shortcut
-## Recommended if repeated use gets tedious
+# Creating A Profile Function Shortcut
+## Recommended for easy repeated use
 
 If rerunning this script using the above command line arguments gets boring and repetitive, here's a shortcut to help you speed things up by assigning a powershell function to serve as an alias for the command:
 
-### Step 0: Launch a Terminal
-You know how to do this already...
+## Step 0: Launch a Terminal
+You know how to do this already...(launch PowerShell)
 
 <br>
 
-### Step 1: Open Your Powershell $PROFILE script
+## Step 1: Set Your Windows Execution Policy
 to do this just run the following in any folder in the terminal:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+<br>
+
+## Step 2: Create A Powershell Function
+This is easy to do. Open your $profile script by running the following in any folder:
 
 ```powershell
 notepad $profile
@@ -188,14 +197,15 @@ this should launch the profile script in none other than the windows notepad app
 
 <br>
 
-### Step 2: Create A Powershell Function
-This is easy to do. Here's the basic template. Type this out in your notepad $profile window 
+Here's the basic template. Type this out in your notepad $profile window.
 
 ```powershell
-function [some function name] { py [your path to RA-sort.py] [your path to blank excel workbooks] }
+function [some function name] { 
+    [python | py] [your path to RA-sort.py] [your path to blank excel workbooks] 
+}
 ```
 
-#### Be sure to include the entire filepath for both RA-sort.py and the blank workbook folders. Using the above example files/folders here's what my function would look like:
+#### Be sure to include the entire file and folder path for both RA-sort.py and the blank workbook folders. Using the above example files/folders here's what my function would look like:
 
 ```powershell
 function pysort {
@@ -204,9 +214,10 @@ function pysort {
 ```
 
 >[!IMPORTANT]
-> Notice how my file and folder paths are wrapped in **quotes** ('' or "", doesn't matter).\
-> This is necessary when your file or folder names have spaces (' ') in them, but is good practice to do anyway just in case.\
-> Also note how at the end of blank-workbooks I did not include a slash. Listing it as ~/blank-workbooks/ will crash RA-sort.py as the OS cannot interpret the end of the folder name if you include the slash at the end.
+> - Remember to update this script if you download a new version release of RA-sort or move your files to different locations
+> - Notice how my file and folder paths are wrapped in **quotes** ('' or "", doesn't matter).\
+> -- This is necessary when your file or folder names have spaces (' ') in them, but is good practice to do anyway just in case.
+> - Do not end folder names with a slash '\\' or '/'. Listing it as ~/blank-workbooks/ will crash RA-sort.py as the OS cannot interpret the folder name and you'll receive a partial completion
 
 <br>
 
@@ -225,13 +236,13 @@ You'll need to relaunch the terminal for changes to take effect.
 
 <br>
 
-### Step 3: Set Your Windows Execution Policy
+<!-- ### Step 3: Set Your Windows Execution Policy
 
 Copy the below command and run in any folder to allow your terminal to load the $profile file we just made each time it opens:
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-```
+``` -->
 
 You'll need to relaunch the terminal for changes to take effect
 
@@ -246,16 +257,16 @@ You'll need to relaunch the terminal for changes to take effect
 >[!IMPORTANT]
 >To get the latest and greatest version of the file I would recommend downloading the zip file from the Releases tab near the top of the page
 
-### 1. Click on releases (or the version with the attached 'Latest' tag)
-![image](etc/readme-imgs/releases.png)
+## Step 1. Click on releases (or the version with the attached 'Latest' tag)
+![image](src/readme-imgs/releases.png)
 <br>
 
-### 2. Click on either **Source code** button to download your preferred file format, both are essentially zip files
-![image](etc/readme-imgs/mvp.png)
+## Step 2. Click on either **Source code** button to download your preferred file format, both are essentially zip files
+![image](src/readme-imgs/mvp.png)
 <br>
 
 ### This will drop a zip file of all of the repository's contents into your downloads folder. From here you can pick out RA-sort.py
-![image](etc/readme-imgs/download-zip.png)
+![image](src/readme-imgs/download-zip.png)
 
 <br>
 <br>
@@ -264,12 +275,12 @@ You'll need to relaunch the terminal for changes to take effect
 >[!WARNING]
 >RA-sort.py may not perform as intended with pre-release versions
 
-### 1. At the top of the page if you are reading this, click on RA-sort.py
-![image](etc/readme-imgs/file.png)
+## Step 1. At the top of the page if you are reading this, click on RA-sort.py
+![image](src/readme-imgs/file.png)
 <br>
 
-### 2. Next, on the top right of the file page, click the button to download raw file
-![image](etc/readme-imgs/download.png)
+## Step 2. Next, on the top right of the file page, click the button to download raw file
+![image](src/readme-imgs/download.png)
 <br>
 
 
@@ -283,47 +294,60 @@ You'll need to relaunch the terminal for changes to take effect
 ## Step 1: Make sure you have python installed (version 3.7 or later)
 Python can be downloaded from https://www.python.org/. I would recommend installing the latest version if you are unsure.\
 To check if your machine already has a version of python installed, simply press the windows key and search for 'python':\
-![image](etc/readme-imgs/check-python.png)
+![image](src/readme-imgs/check-python.png)
 <br>
 <br>
 If you do not see a version installed, follow the instructions on Python's website linked above for a fresh install. After downloading, be sure to run the .exe file to install it.
 
+>[!NOTE]
+> During installation, the program will ask you if you would like to add Python to the system path, check this box if you see it to avoid needing to do Step 2.\
+> Step 3 is recommended to do anyway
+
 <br>
 
-## Step 2: Adding Python to your system path
-This step will take the most work, but is not difficult to do.\
-First, keep your path to python handy, we will need it later.\
-<br>
+## Step 2: Verify Python is on Your System Path
+This step will take the most work, but is not difficult to do
+<!-- First, keep your path to python handy, we will need it later.\ -->
 
-You can find this located at: 
+An easy check do check if python's executable file is found on your path is to run the following in any folder in the terminal:
+```powershell
+> gcm python
+
+output:
+
+CommandType     Name             Version    Source
+-----------     ----             -------    ------
+Application     python.exe       3.12.31... C:\Users\Cody Costa\AppData\Local\Programs\Python\Python312\python.exe
+
+```
+
+If you don't see a similar result with a source similar to the following then proceed with the rest of the guide: 
 ```powershell
 C:\Users\<USER>\AppData\Local\Programs\Python\Python<3XX>\
 ```
 
-Just enter your USER name and substitute 3XX with whichever version you downloaded.\
-Python 3.13 is the latest release at the time of development.\
 <br>
 
-Next, press the windows key and type out 'env', and click on **Edit the system environment variables**
-![image](etc/readme-imgs/sys-env.png)
+Press the windows key and type out 'env', and click on **Edit the system environment variables**
+![image](src/readme-imgs/sys-env.png)
 <br>
 <br>
 
 A new 'System Properties' window will open, and we want to click on **Environment Variables**\
-![image](etc/readme-imgs/sys-props.png)
+![image](src/readme-imgs/sys-props.png)
 <br>
 <br>
 
 This will bring up a new window called 'Environment Variables'\
 Navigate to the **system variables** section and click on the item labeled Path and then click **Edit**
-![image](etc/readme-imgs/env-vars.png)
+![image](src/readme-imgs/env-vars.png)
 <br>
 <br>
 
 Another new window will pop up, and we will then click on **New**\
 In the field that pops up, here is where you will paste in your PYTHON PATH from earlier\
 You can see mine listed at the bottom\
-![image](etc/readme-imgs/edit-vars.png)
+![image](src/readme-imgs/edit-vars.png)
 <br>
 
 #### Go ahead and click on **OK** on all the open windows to close them, and you are done with path setup!
@@ -333,13 +357,13 @@ You can see mine listed at the bottom\
 ## Step 3:  Diasabling Execution Aliasing
 This part is easier than step 2.\
 Press the windows key and search for 'app exec', and click on **Manage app execution aliases**
-![image](etc/readme-imgs/execution.png)
+![image](src/readme-imgs/execution.png)
 <br>
 <br>
 
 Scroll down until you see 2 programs named **App Installer** with python.exe and python3.exe listed below the titles.\
 Turn both of these **OFF**\
-![image](etc/readme-imgs/alias-off.png)
+![image](src/readme-imgs/alias-off.png)
 <br>
 <br>
 

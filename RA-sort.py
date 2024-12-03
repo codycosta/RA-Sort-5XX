@@ -186,7 +186,7 @@ prYellow(f'\nRunning script in current folder:\t{root}\n')
 archive_folder = f'backup-{datetime.datetime.now().strftime('%Y-%m-%d')}'
 
 if not os.path.exists(archive_folder):
-    print('\nCreating RA backup folder...\n')
+    prCyan('\nCreating RA backup folder...\n')
     print(f'created folder:\t{os.getcwd()}\\{archive_folder}\n')
     os.mkdir(archive_folder)
 

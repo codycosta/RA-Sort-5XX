@@ -1,6 +1,14 @@
 # new script to test refactors/improvements to the program
 
 '''
+
+Author:     Cody Costa    
+Company:    KLA Corporation
+Title:      ATE3, 5XX BE LEAD
+Date:       12/3/2024
+
+*************************************
+
 Planned changes:
 
 1.  remove the step to delete empty folders
@@ -24,7 +32,7 @@ for RA in glob.glob(f'{root_dir}/RA*.txt'):
     if 'CETUS' in RA:
         if not os.path.exists(f'{root_dir}/CETUS'):
             os.mkdir(f'{root_dir}/CETUS')
-            print(f'{root_dir}\\CETUS')
+            print(f'creating and populating destination folder:\t{root_dir}\\CETUS')
         shutil.move(RA, f'{root_dir}/CETUS')
         continue
 
@@ -62,7 +70,7 @@ for RA in glob.glob(f'{root_dir}/RA*.txt'):
     destination = f'{root_dir}\\{scan_type}\\{threshold}'
     if not os.path.exists(destination):
         os.makedirs(destination)
-        print(destination)
+        print(f'creating and populating destination folder:\t{destination}')
 
     # move file
     shutil.move(RA, destination)

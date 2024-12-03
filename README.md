@@ -309,7 +309,7 @@ If you do not see a version installed, follow the instructions on Python's websi
 This step will take the most work, but is not difficult to do
 <!-- First, keep your path to python handy, we will need it later.\ -->
 
-An easy check do check if python's executable file is found on your path is to run the following in any folder in the terminal:
+An easy way to check if python's executable file is found on your path is to run the following in any folder in the terminal:
 ```powershell
 > gcm python
 
@@ -321,7 +321,7 @@ Application     python.exe       3.12.31... C:\Users\Cody Costa\AppData\Local\Pr
 
 ```
 
-If you don't see a similar result with a source similar to the following then proceed with the rest of the guide: 
+If you don't see a valid result with a source similar to the following then proceed with the rest of the guide: 
 ```powershell
 C:\Users\<USER>\AppData\Local\Programs\Python\Python<3XX>\
 ```

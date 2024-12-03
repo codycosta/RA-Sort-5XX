@@ -276,7 +276,7 @@ for file in os.listdir():
                 shutil.move(file, 'EPSM')
 
     elif 'RA' not in name and '.txt' not in name:
-        prRed(f'Invalid filename {file} unable to be sorted')
+        prRed(f'Ignoring file:\t{file}')
 
 # checkpoint validation
 if glob.glob(f'{root}/RA*.txt'):

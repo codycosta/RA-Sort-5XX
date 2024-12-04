@@ -39,6 +39,12 @@ def prCyan(skk):
     print(f"\033[96m {skk}\033[00m")
 
 
+def display_exit_code(flag, time_start) -> None:
+    if not flag:
+        return prGreen(f'\nexit status 0:  SUCCESSFUL\nruntime:\t {datetime.datetime.now() - time_start}\n')
+    return prYellow(f'\nexit status 1:   PARTIAL\nruntime:\t {datetime.datetime.now() - time_start}\n')
+
+
 def display_title_msg() -> None:
     print(
 f'''
@@ -59,7 +65,7 @@ f'''
 
 
 def backup_src(root_dir: str) -> None:
-    prCyan('backing up RA files')
+    prCyan('\nbacking up RA files')
     archive_folder = f'backup-{datetime.datetime.now().strftime('%Y-%m-%d')}'
     if not os.path.exists(f'{root_dir}/{archive_folder}'):
         os.mkdir(f'{root_dir}/{archive_folder}')
@@ -67,11 +73,11 @@ def backup_src(root_dir: str) -> None:
         for file in glob.glob(f'{root_dir}/RA*.txt'):
             shutil.copy(file, archive_folder)
     else:
-        prYellow(f'Existing backup found:\t{root_dir}\\{archive_folder}')
+        prYellow(f'\nExisting backup found:\t{root_dir}\\{archive_folder}')
 
 
-def src_file_sort(root_dir: str) -> None:
-    prCyan('sorting source RA files')
+def src_file_sort(root_dir: str) -> bool:
+    prCyan('\nsorting source RA files')
     Destinations = []
     # loop through each file and find both scan type and threshold
     for RA in glob.glob(f'{root_dir}/RA*.txt'):
@@ -117,11 +123,13 @@ def src_file_sort(root_dir: str) -> None:
     
     # return data for excel files
     if len(sys.argv) == 2:
-        excel_file_sort(root_dir, Destinations)
+        return excel_file_sort(root_dir, Destinations)
+    return False
 
 
-def excel_file_sort(root_dir:str, Destinations: list) -> None:
-    prCyan('transferring appropriate excel files')
+def excel_file_sort(root_dir:str, Destinations: list) -> bool:
+    flag = False
+    prCyan('\ntransferring appropriate excel files')
     excel_dir = sys.argv[1]
     scan_types = ['CETUS', 'COG', 'EPSM', 'SL']
     try:
@@ -130,6 +138,7 @@ def excel_file_sort(root_dir:str, Destinations: list) -> None:
         excel_dir = os.getcwd()
     except FileNotFoundError:
         prRed(f'{excel_dir} folder not found')
+        display_exit_code(True)
         raise SystemExit
     
     for folder in Destinations:
@@ -142,6 +151,7 @@ def excel_file_sort(root_dir:str, Destinations: list) -> None:
             matching_excel_book = glob.glob(f'{excel_dir}/*{scan_type}*')[0]
         except IndexError:
             prRed(f'excel file for scan type {scan_type} not found')
+            flag = True
         else:
             shutil.copy(matching_excel_book, folder)
             print(f'copied {os.path.basename(matching_excel_book)} to:\t{folder}')
@@ -151,6 +161,8 @@ def excel_file_sort(root_dir:str, Destinations: list) -> None:
                 )
                 print(f'copied {os.path.basename(matching_excel_book)} to:\t{folder}')
 
+    return flag
+
 
 def main() -> None:
     display_title_msg()
@@ -158,9 +170,10 @@ def main() -> None:
     root_dir = os.getcwd()
 
     backup_src(root_dir)
-    src_file_sort(root_dir)
+    flag = src_file_sort(root_dir)
 
-    prGreen(f'runtime:\t {datetime.datetime.now() - time_start}')
+    display_exit_code(flag)
+    
 
 main()
 

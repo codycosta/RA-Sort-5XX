@@ -41,8 +41,8 @@ def prCyan(skk):
 
 def display_exit_code(flag, time_start) -> None:
     if not flag:
-        return prGreen(f'\nexit status 0:  SUCCESSFUL\nruntime:\t {datetime.datetime.now() - time_start}\n')
-    return prYellow(f'\nexit status 1:   PARTIAL\nruntime:\t {datetime.datetime.now() - time_start}\n')
+        return prGreen(f'\nexit status 0:\t SUCCESSFUL\nruntime:\t {datetime.datetime.now() - time_start}\n')
+    return prYellow(f'\nexit status 1:\t PARTIAL\nruntime:\t {datetime.datetime.now() - time_start}\n')
 
 
 def display_title_msg() -> None:
@@ -76,7 +76,7 @@ def backup_src(root_dir: str) -> None:
         prYellow(f'\nExisting backup found:\t{root_dir}\\{archive_folder}')
 
 
-def src_file_sort(root_dir: str) -> bool:
+def src_file_sort(root_dir: str, time_start) -> bool:
     prCyan('\nsorting source RA files')
     Destinations = []
     # loop through each file and find both scan type and threshold
@@ -87,6 +87,7 @@ def src_file_sort(root_dir: str) -> bool:
                 print(f'populating destination folder:\t{root_dir}\\CETUS')
                 Destinations.append(f'{root_dir}/CETUS')
             shutil.move(RA, f'{root_dir}/CETUS')
+            continue
 
         elif 'SPICA' in RA:
             if 'COG' in RA or '260C-' in RA or '320C-' in RA or '400C-' in RA:
@@ -123,11 +124,11 @@ def src_file_sort(root_dir: str) -> bool:
     
     # return data for excel files
     if len(sys.argv) == 2:
-        return excel_file_sort(root_dir, Destinations)
+        return excel_file_sort(root_dir, Destinations, time_start)
     return False
 
 
-def excel_file_sort(root_dir:str, Destinations: list) -> bool:
+def excel_file_sort(root_dir:str, Destinations: list, time_start) -> bool:
     flag = False
     prCyan('\ntransferring appropriate excel files')
     excel_dir = sys.argv[1]
@@ -138,7 +139,7 @@ def excel_file_sort(root_dir:str, Destinations: list) -> bool:
         excel_dir = os.getcwd()
     except FileNotFoundError:
         prRed(f'{excel_dir} folder not found')
-        display_exit_code(True)
+        display_exit_code(True, time_start)
         raise SystemExit
     
     for folder in Destinations:
@@ -170,9 +171,9 @@ def main() -> None:
     root_dir = os.getcwd()
 
     backup_src(root_dir)
-    flag = src_file_sort(root_dir)
+    flag = src_file_sort(root_dir, time_start)
 
-    display_exit_code(flag)
+    display_exit_code(flag, time_start)
     
 
 main()

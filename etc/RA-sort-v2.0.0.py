@@ -1,30 +1,18 @@
-# new script to test refactors/improvements to the program
+# VERSION 2.0.0
 
 '''
-
 Author:     Cody Costa    
 Company:    KLA Corporation
 Title:      ATE3, 5XX BE LEAD
 Date:       12/3/2024
 
-*************************************
-
-Planned changes:
-
-1.  remove the step to delete empty folders
-    - instead just create the needed folders
-
-2.  clump sorting into one step instead of individual base and threshold steps
-
 '''
-
-# ****************************************************************************
-''' Test code changes here '''
 
 import os, shutil, glob, sys, datetime, time
 version = '2.0.0'
 os.system('')
 
+'''****************************************************************************'''
 
 def prRed(skk): 
     print(f"\033[91m {skk}\033[00m")
@@ -63,6 +51,7 @@ f'''
     )
     time.sleep(1)
 
+'''****************************************************************************'''
 
 def backup_src(root_dir: str) -> None:
     prCyan('\nbacking up RA files')
@@ -75,6 +64,7 @@ def backup_src(root_dir: str) -> None:
     else:
         prYellow(f'\nExisting backup found:\t{root_dir}\\{archive_folder}')
 
+'''****************************************************************************'''
 
 def src_file_sort(root_dir: str, time_start) -> bool:
     prCyan('\nsorting source RA files')
@@ -127,6 +117,7 @@ def src_file_sort(root_dir: str, time_start) -> bool:
         return excel_file_sort(root_dir, Destinations, time_start)
     return False
 
+'''****************************************************************************'''
 
 def excel_file_sort(root_dir:str, Destinations: list, time_start) -> bool:
     flag = False
@@ -138,7 +129,7 @@ def excel_file_sort(root_dir:str, Destinations: list, time_start) -> bool:
         os.chdir(excel_dir)
         excel_dir = os.getcwd()
     except FileNotFoundError:
-        prRed(f'{excel_dir} folder not found')
+        prRed(f'\n{excel_dir} excel folder not found')
         display_exit_code(True, time_start)
         raise SystemExit
     
@@ -149,37 +140,35 @@ def excel_file_sort(root_dir:str, Destinations: list, time_start) -> bool:
                 scan_type = Type
                 break
         try:
-            matching_excel_book = glob.glob(f'{excel_dir}/*{scan_type}*')[0]
+            matching_excel_book = glob.glob(f'{excel_dir}/*{scan_type.casefold()}*')[0]
         except IndexError:
-            prRed(f'excel file for scan type {scan_type} not found')
+            prRed(f'{scan_type} excel file not found for:\t{folder}')
             flag = True
         else:
             shutil.copy(matching_excel_book, folder)
             print(f'copied {os.path.basename(matching_excel_book)} to:\t{folder}')
             if numRAs > 10:
-                shutil.copy(
-                    f'{os.path.splitext(matching_excel_book)[0]}(2){os.path.splitext(matching_excel_book)[1]}', folder
-                )
-                print(f'copied {os.path.basename(matching_excel_book)} to:\t{folder}')
+                duplicate = f'{os.path.splitext(matching_excel_book)[0]}(2){os.path.splitext(matching_excel_book)[1]}'
+                shutil.copy(duplicate, folder)
+                print(f'copied {os.path.basename(duplicate)} to:\t{folder}')
 
     return flag
 
+'''****************************************************************************'''
 
 def main() -> None:
     display_title_msg()
     time_start = datetime.datetime.now()
     root_dir = os.getcwd()
-
     backup_src(root_dir)
     flag = src_file_sort(root_dir, time_start)
-
     display_exit_code(flag, time_start)
     
 
 main()
 
-# program runs almost twice as fast as v1.2.4
-# missing all the visual fluff however
-
-# running about 25% faster than v1.2.4
-# added RA backup folder creation step which takes time
+'''
+Exit notes:
+v2.0.0 executes roughly 100% faster than v1.2.4 w/o creating the RA backup folder
+v2.0.0 executes roughly 50% faster than v1.2.4 when all steps in each file are ran
+'''

@@ -47,12 +47,12 @@ $$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  
 <br>
 
 The default windows terminal on our KLA machines is Windows Command Prompt. To launch this just press the windows key and type 'cmd':\
-![image](src/readme-imgs/cmd-terminal.png)
+![image](imgs/readme-imgs/cmd-terminal.png)
 
 <br>
 
 To elevate your terminal game, I'd recommend using Powershell rather then Command Prompt, which can be easily found in the same fashion by searching for Powershell at the windows start menu:\
-![image](src/readme-imgs/powershell.png)
+![image](imgs/readme-imgs/powershell.png)
 
 <br>
 
@@ -258,15 +258,15 @@ You'll need to relaunch the terminal for changes to take effect
 >To get the latest and greatest version of the file I would recommend downloading the zip file from the Releases tab near the top of the page
 
 ## Step 1. Click on releases (or the version with the attached 'Latest' tag)
-![image](src/readme-imgs/releases.png)
+![image](imgs/readme-imgs/releases.png)
 <br>
 
 ## Step 2. Click on either **Source code** button to download your preferred file format, both are essentially zip files
-![image](src/readme-imgs/mvp.png)
+![image](imgs/readme-imgs/mvp.png)
 <br>
 
 ### This will drop a zip file of all of the repository's contents into your downloads folder. From here you can pick out RA-sort.py
-![image](src/readme-imgs/download-zip.png)
+![image](imgs/readme-imgs/download-zip.png)
 
 <br>
 <br>
@@ -276,11 +276,11 @@ You'll need to relaunch the terminal for changes to take effect
 >RA-sort.py may not perform as intended with pre-release versions
 
 ## Step 1. At the top of the page if you are reading this, click on RA-sort.py
-![image](src/readme-imgs/file.png)
+![image](imgs/readme-imgs/file.png)
 <br>
 
 ## Step 2. Next, on the top right of the file page, click the button to download raw file
-![image](src/readme-imgs/download.png)
+![image](imgs/readme-imgs/download.png)
 <br>
 
 
@@ -294,7 +294,7 @@ You'll need to relaunch the terminal for changes to take effect
 ## Step 1: Make sure you have python installed (version 3.7 or later)
 Python can be downloaded from https://www.python.org/. I would recommend installing the latest version if you are unsure.\
 To check if your machine already has a version of python installed, simply press the windows key and search for 'python':\
-![image](src/readme-imgs/check-python.png)
+![image](imgs/readme-imgs/check-python.png)
 <br>
 <br>
 If you do not see a version installed, follow the instructions on Python's website linked above for a fresh install. After downloading, be sure to run the .exe file to install it.
@@ -329,25 +329,25 @@ C:\Users\<USER>\AppData\Local\Programs\Python\Python<3XX>\
 <br>
 
 Press the windows key and type out 'env', and click on **Edit the system environment variables**
-![image](src/readme-imgs/sys-env.png)
+![image](imgs/readme-imgs/sys-env.png)
 <br>
 <br>
 
 A new 'System Properties' window will open, and we want to click on **Environment Variables**\
-![image](src/readme-imgs/sys-props.png)
+![image](imgs/readme-imgs/sys-props.png)
 <br>
 <br>
 
 This will bring up a new window called 'Environment Variables'\
 Navigate to the **system variables** section and click on the item labeled Path and then click **Edit**
-![image](src/readme-imgs/env-vars.png)
+![image](imgs/readme-imgs/env-vars.png)
 <br>
 <br>
 
 Another new window will pop up, and we will then click on **New**\
 In the field that pops up, here is where you will paste in your PYTHON PATH from earlier\
 You can see mine listed at the bottom\
-![image](src/readme-imgs/edit-vars.png)
+![image](imgs/readme-imgs/edit-vars.png)
 <br>
 
 #### Go ahead and click on **OK** on all the open windows to close them, and you are done with path setup!
@@ -357,13 +357,13 @@ You can see mine listed at the bottom\
 ## Step 3:  Diasabling Execution Aliasing
 This part is easier than step 2.\
 Press the windows key and search for 'app exec', and click on **Manage app execution aliases**
-![image](src/readme-imgs/execution.png)
+![image](imgs/readme-imgs/execution.png)
 <br>
 <br>
 
 Scroll down until you see 2 programs named **App Installer** with python.exe and python3.exe listed below the titles.\
 Turn both of these **OFF**\
-![image](src/readme-imgs/alias-off.png)
+![image](imgs/readme-imgs/alias-off.png)
 <br>
 <br>
 

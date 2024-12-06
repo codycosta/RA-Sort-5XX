@@ -1,105 +1,18 @@
-'''
+# VERSION 2.0.0
 
+'''
 Author:     Cody Costa    
 Company:    KLA Corporation
 Title:      ATE3, 5XX BE LEAD
-Date:       10/24/24
+Date:       12/3/2024
 
 '''
 
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
+import os, shutil, glob, sys, datetime, time
+version = '2.0.0'
+os.system('')
 
-# RA-sort.py
-# script to help sort RA files into different folders based on scan type and residual threshold prior to placement in excel
-# for use with 5XX SPICA and CETUS mask inspection RA files
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-# Root Directory/ (where RA files are stored, ready to be sorted)
-
-#   RA-sort.py
-
-#   CETUS/
-#   COG/
-#       |--> 65/
-#       |--> 75/
-#       |--> 85/
-#   EPSM/
-#       |--> 65/
-#       |--> 75/
-#       |--> 85/
-#   SL/
-#       |--> 65/
-#       |--> 75/
-#       |--> 85/
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-# running python 3.12 at the time of development
-# python version 3.7 or later should be supported due to the use of f strings
-
-
-# usage:    ~\ >>   python [path to RA-sort.py]
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-# How to run:
-
-# STEP 1:   Ensure first you have a version of python installed on your machine
-
-# you can download your prefered version from:  https://www.python.org/
-# if you are unsure which version to run, a safe bet is to install the latest release
-
-
-# STEP 2:   Edit your system path variable to allow your machine to call upon python
-
-# NOTE: RealPython has a very good guide on how to do this (with pictures) here:  https://realpython.com/add-python-to-path/
-
-# press the windows key
-# type 'env', and click on the box that says "Edit the sytem environment variables"
-# click Environment variables near the bottom of the window
-# down under the "system variables" section find the variable named Path and click, then click the edit button below
-# click New
-# type in the path to your python executable in the new line, found in:     C:\Users\<USER>\AppData\Local\Programs\Python\Python312 <-- or whichever version you are running
-# click OK on all the open windows to close them
-# your system path variable should now include python
-
-
-# STEP 3:   Turn off python execution aliases
-
-# press the windows key
-# type 'App execution aliases' and click the first result
-# scroll down until you find 2 programs named 'App Installer' with python.exe and python3.exe listed under the name
-# turn both of these off
-# your system should be ready to run the file now :)
-
-
-# STEP 4:   Reference the file when running
-
-# if your python file exists in Downloads\ and your RA files exist in Documents\
-# you would run the script as such:
-
-#       ~ >>  cd Documents        (navigate to directory where RA files are held to sort)
-#       ~/Documents >>  python ../Downloads/RA-sort.py
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Needed Python Packages'''
-
-import os           # filesystem manipulation
-import sys          # command line argument handling
-import shutil       # high level file usage (copy, rename, etc)
-import glob         # filename pattern matching
-import time         # run timer
-import datetime     # timestamp RA backup folders
-
-os.system('')       # inject null character to terminal handler to reset ANSI bug for color coding
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Functions for terminal message coloring and exit logs'''
+'''****************************************************************************'''
 
 def prRed(skk): 
     print(f"\033[91m {skk}\033[00m")
@@ -114,331 +27,149 @@ def prCyan(skk):
     print(f"\033[96m {skk}\033[00m")
 
 
-def display_exit_logs():
-    err_flag = False
-    for val in checkpoints.values():
-        if not val:
-            err_flag = True
+def display_exit_code(flag, time_start) -> None:
+    if not flag:
+        return prGreen(f'\nexit status 0:\t SUCCESSFUL\nruntime:\t {datetime.datetime.now() - time_start}\n')
+    return prYellow(f'\nexit status 1:\t PARTIAL\nruntime:\t {datetime.datetime.now() - time_start}\n')
 
-    if not err_flag:
-        prGreen(
+
+def display_title_msg(root_dir) -> None:
+    print(
 f'''
-\n\n********************************************\n
-PROCESS COMPLETED SUCCESSFULLY!
-time elapsed:\t{datetime.datetime.now() - time_start}\n
-********************************************
-''')
+8888888b.         d8888                                  888                          
+888   Y88b       d88888                                  888                          
+888    888      d88P888                                  888                          
+888   d88P     d88P 888        .d8888b   .d88b.  888d888 888888     88888b.  888  888 
+8888888P"     d88P  888        88K      d88""88b 888P"   888        888 "88b 888  888 
+888 T88b     d88P   888 888888 "Y8888b. 888  888 888     888        888  888 888  888 
+888  T88b   d8888888888             X88 Y88..88P 888     Y88b.  d8b 888 d88P Y88b 888 
+888   T88b d88P     888         88888P'  "Y88P"  888      "Y888 Y8P 88888P"   "Y88888 
+                                                                    888           888 
+                                                                    888      Y8b d88P 
+                                                                    888       "Y88P"        v{version}
+'''
+    )
+    prYellow(f'\nroot -> {root_dir}')
+    time.sleep(1)
 
+'''****************************************************************************'''
+
+def backup_src(root_dir: str) -> None:
+    prCyan('\nbacking up RA files')
+    archive_folder = f'backup-{datetime.datetime.now().strftime('%Y-%m-%d')}'
+    if not os.path.exists(f'{root_dir}/{archive_folder}'):
+        os.mkdir(f'{root_dir}/{archive_folder}')
+        print(f'populating RA backup folder:\t{os.getcwd()}\\{archive_folder}')
+        for file in glob.glob(f'{root_dir}/RA*.txt'):
+            shutil.copy(file, archive_folder)
     else:
-        prYellow(
-f'''
-\n\n********************************************\n
-PROCESS COMPLETED PARTIALLY!
-time elapsed:\t{datetime.datetime.now() - time_start}\n
-********************************************
-''')
-        
-    print('Critical Operations:\n')
-
-    for check in checkpoints.keys():
-        if checkpoints[check]:
-            prGreen(f'{check}:\tPASSED')
-        else:
-            prRed(f'{check}:\tFAILED')
-    print()
-
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Display Title Message'''
-
-print(
-r'''
-$$$$$$$\   $$$$$$\                                         $$\                             
-$$  __$$\ $$  __$$\                                        $$ |                            
-$$ |  $$ |$$ /  $$ |         $$$$$$$\  $$$$$$\   $$$$$$\ $$$$$$\        $$$$$$\  $$\   $$\ 
-$$$$$$$  |$$$$$$$$ |$$$$$$\ $$  _____|$$  __$$\ $$  __$$\\_$$  _|      $$  __$$\ $$ |  $$ |
-$$  __$$< $$  __$$ |\______|\$$$$$$\  $$ /  $$ |$$ |  \__| $$ |        $$ /  $$ |$$ |  $$ |
-$$ |  $$ |$$ |  $$ |         \____$$\ $$ |  $$ |$$ |       $$ |$$\     $$ |  $$ |$$ |  $$ |
-$$ |  $$ |$$ |  $$ |        $$$$$$$  |\$$$$$$  |$$ |       \$$$$  |$$\ $$$$$$$  |\$$$$$$$ |
-\__|  \__|\__|  \__|        \_______/  \______/ \__|        \____/ \__|$$  ____/  \____$$ |
-                                                                       $$ |      $$\   $$ |
-                                                                       $$ |      \$$$$$$  |
-                                                                       \__|       \______/      v1.2.4
-''')
-time.sleep(1)
-time_start = datetime.datetime.now()
-
-err_flag = False
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Create backup folder with all pulled RAs to easily reset the workspace if something goes wrong'''
-
-# record root directory location (folder the script was run in)
-root = os.getcwd()
-src_backup = False
-prYellow(f'\nRunning script in current folder:\t{root}\n')
-
-# running in root directory
-archive_folder = f'backup-{datetime.datetime.now().strftime('%Y-%m-%d')}'
-
-if not os.path.exists(archive_folder):
-    prCyan('\nCreating RA backup folder...\n')
-    print(f'created folder:\t{os.getcwd()}\\{archive_folder}\n')
-    os.mkdir(archive_folder)
-
-else:
-    prYellow(f'Existing backup folder found:\t{root}\\{archive_folder}\n')
-
-for file in glob.glob('RA*.txt'):
-    shutil.copy(file, archive_folder)
-
-# checkpoint validation
-if os.listdir(f'{root}/{archive_folder}'):
-    src_backup = True
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Create base and threshold folders'''
-
-prCyan('\nCreating base and threshold folders...\n')
-
-base_folders = ['CETUS', 'COG', 'EPSM', 'SL']
-thresholds = ['65', '75', '85']
-folder_total = 0
-src_dests = False
-
-for folder in base_folders:
-
-    if not os.path.exists(folder):
-        os.mkdir(folder)
-        print(f'created folder:\t{root}\\{folder}')
-    else:
-        prYellow(f'Exsiting folder found:\t{root}\\{folder}')
-    
-    folder_total += 1
-
-    if folder == 'CETUS':
-        continue
-
-    for t in thresholds:
-        if not os.path.exists(f'{root}\\{folder}\\{t}'):
-            print(f'created folder:\t{root}\\{folder}\\{t}')
-            os.mkdir(f'{root}\\{folder}\\{t}')
-        else:
-            prYellow(f'Existing folder found:\t{root}\\{folder}\\{t}')
-
-        folder_total += 1
-    
-# checkpoint validation
-if folder_total == 13:
-    src_dests = True
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Sort RA files first into base directory destinations'''
-
-# list files in parent directory and separate into base folders
-base_sort = True
-os.chdir(root)
-prCyan('\n\nOrganizing RA data...')
-
-for file in os.listdir():
-    
-    if not os.path.splitext(file)[1]:
-        continue
-
-    name = os.path.splitext(file)[0]
-
-    # CETUS
-    if 'CETUS400V5' in name:
-        shutil.move(file, 'CETUS')
-
-    elif 'SPICA200V7' in name:
-
-        # COG
-        if 'COG' in name or '260C-' in name or '320C-' in name or '400C-' in name:
-            shutil.move(file, 'COG')
-
-        # EPSM
-        if 'EPSM' in name or '260E-' in name or '320E-' in name or '400E-' in name:
-
-            # STARLIGHT
-            if 'UXRsl' in name or 'sl' in name and '-SL-' in name:
-                shutil.move(file, 'SL')
-
-            else:
-                shutil.move(file, 'EPSM')
-
-    elif 'RA' not in name and '.txt' not in name:
-        prRed(f'Ignoring file:\t{file}')
-
-# checkpoint validation
-if glob.glob(f'{root}/RA*.txt'):
-    base_sort = False
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Sort RA files into respective thresholds'''
-
-print('\nOrganizing CETUS data...')
-
-thresh_sort = True
-for folder in ['COG', 'EPSM', 'SL']:
-    os.chdir(f'{root}/{folder}')
-
-    print(f'Organizing {folder} thresholds...')
-
-    for file in os.listdir():
-        name = os.path.splitext(file)[0]
-
-        if folder == 'COG' and 'MC' in name or folder == 'EPSM' and 'MC' in name:
-
-            if 'P150' in name:
-                shutil.move(file, '65')
-
-            else:
-                threshold_start = name.index('dbdd') + 4
-                threshold = name[threshold_start: threshold_start + 2]
-
-                if threshold == 'sl':
-                    threshold = name[threshold_start + 2: threshold_start + 4]
-                    
-                shutil.move(file, threshold)
-
-        else:
-
-            if '65-P' in name:
-                shutil.move(file, '65')
-
-            elif '75-P' in name:
-                shutil.move(file, '75')
-
-            elif '85-P' in name:
-                shutil.move(file, '85')
-
-
-            # special case for X5.3 P72i tasks that don't follow conventional algo names
-            # slsd and slmd algo tasks get thrown in TR65 folder
-
-            elif 'slmd' in name or 'slsd' in name:
-                shutil.move(file, '65')
-
-    # checkpoint validation
-    if glob.glob(f'{root}/{folder}/RA*.txt'):
-        thresh_sort = False
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Delete any empty folders'''
-
-prCyan('\n\nRemoving any empty directories...\n')
-os.chdir(root)
-rm_empty = True
-
-def delete_empty_folders(root):
-    try:
-        for item in os.listdir(root):
-            if not os.path.splitext(item)[1]:
-                delete_empty_folders(f'{root}/{item}')
-
-    except FileNotFoundError as e:
-        prRed(root, os.listdir(root), e)
-    
-    if not os.listdir(root):
-        print(f'removed folder:\t{root}')
-        shutil.rmtree(root)
-
-delete_empty_folders(root)
-
-# checkpoint validation
-for folder in os.listdir(root):
-    if not os.listdir(f'{root}/{folder}'):
-        rm_empty = False
-        prYellow(f'Found empty folder:\t{root}\\{folder}')
-    for t in os.listdir(f'{root}/{folder}'):
-        if not os.path.splitext(t)[1]:
-            if not os.listdir(f'{root}/{folder}/{t}'):
-                rm_empty = False
-                prYellow(f'Found empty folder:\t{root}\\{folder}\\{t}')
-
-checkpoints = {
-    'RA backup folder': src_backup, 
-    'RA destinations': src_dests, 
-    'RA base sorting': base_sort, 
-    'RA spec sorting': thresh_sort, 
-    'rm empty folders': rm_empty,
-}
-
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''Optional inclusion to copy/move matching excel sheets into each folder'''
-
-# my excel folder (relative to root) is '../blank-workbooks/'
-excel_copied = True
-if len(sys.argv) > 1:
-
-    checkpoints['excel files copied'] = excel_copied
-
-    excel = sys.argv[1]
-
-    prCyan(f'\n\nCopying excel workbooks...\n')
-
-    try:
-        os.chdir(root)
-        os.chdir(excel)
-    
-    except FileNotFoundError:
-        prRed(f'RA excel workbook folder \'{excel}\' not found, terminating program here...\n')
-        checkpoints['excel files copied'] = False
-        display_exit_logs()
-        raise SystemExit
-
-
-    excel_dir = os.getcwd()
-
-    # still in excel dir while this loop is running
-    for folder in os.listdir(root): # CETUS, COG, EPSM, SL      base folders
-        if 'backup' in folder:
+        prYellow(f'\nExisting backup found:\t{root_dir}\\{archive_folder}')
+
+'''****************************************************************************'''
+
+def src_file_sort(root_dir: str, time_start) -> bool:
+    prCyan('\nsorting source RA files')
+    Destinations = []
+    # loop through each file and find both scan type and threshold
+    for RA in glob.glob(f'{root_dir}/RA*.txt'):
+        if 'CETUS' in RA:
+            if not os.path.exists(f'{root_dir}/CETUS'):
+                os.mkdir(f'{root_dir}/CETUS')
+                print(f'populating destination folder:\t{root_dir}\\CETUS')
+                Destinations.append(f'{root_dir}/CETUS')
+            shutil.move(RA, f'{root_dir}/CETUS')
             continue
 
-        try:
-            excel_book = glob.glob(f'*{folder.casefold()}*.xls*')[0]
+        elif 'SPICA' in RA:
+            if 'COG' in RA or '260C-' in RA or '320C-' in RA or '400C-' in RA:
+                scan_type = 'COG'
+            elif 'EPSM' in RA or '260E-' in RA or '320E-' in RA or '400E-' in RA:
+                scan_type = 'EPSM'
 
-        except IndexError:
-            prRed(f'Excel book that matches {folder} scan type not found in provided excel folder...\n')
-            checkpoints['excel files copied'] = False
+            if 'MC' in RA:
+                if '-DDB-' in RA or '-D2D-' in RA:
+                    threshold_idx_start = RA.index('dbdd') + 4
+                    threshold = RA[threshold_idx_start: threshold_idx_start + 2]
+                    if threshold == 'sl':
+                        threshold = RA[threshold_idx_start + 2: threshold_idx_start + 4]
 
-        else:
-            destinations = glob.glob(f'{root}/{folder}/*/')
-
-            print(f'copied {excel_book} to:\t\t{root}\\{folder}\\*')
-
-            if destinations:
-                for path in destinations:
-                    numRAs = len(glob.glob(f'{path}/*.P0.*.txt'))
-                    shutil.copy(excel_book, path)
-                    if numRAs > 10:
-                        shutil.copy(excel_book, f'{path}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
-
+                elif '-SL-' in RA:
+                    scan_type = 'SL'
+                    threshold_idx_start = RA.index('-P') - 2
+                    threshold = RA[threshold_idx_start: threshold_idx_start + 2]
+            
             else:
-                shutil.copy(excel_book, f'{root}/{folder}')
-                numRAs = len(glob.glob(f'{root}/{folder}/*.P0.*.txt'))
-                if numRAs > 10:
-                    shutil.copy(excel_book, f'{root}/{folder}/{os.path.splitext(excel_book)[0]}(2){os.path.splitext(excel_book)[1]}')
+                threshold_idx_start = RA.index('-P') - 2
+                threshold = RA[threshold_idx_start: threshold_idx_start + 2]
+                if 'UXRsl' in RA and scan_type == 'EPSM':
+                    scan_type = 'SL'
+                        
+        destination = f'{root_dir}\\{scan_type}\\{threshold}'
+        if not os.path.exists(destination):
+            os.makedirs(destination)
+            print(f'populating destination folder:\t{destination}')
+            Destinations.append(destination)
 
+        # move file
+        shutil.move(RA, destination)
+    
+    # return data for excel files
+    if len(sys.argv) == 2:
+        return excel_file_sort(root_dir, Destinations, time_start)
+    return False
 
+'''****************************************************************************'''
 
-# //////////////////////////////////////////////////////////////////////////////////////////////////////
-'''display terminal message for when program finishes'''
+def excel_file_sort(root_dir:str, Destinations: list, time_start) -> bool:
+    flag = False
+    prCyan('\ntransferring appropriate excel files')
+    excel_dir = sys.argv[1]
+    scan_types = ['CETUS', 'COG', 'EPSM', 'SL']
+    try:
+        os.chdir(root_dir)
+        os.chdir(excel_dir)
+        excel_dir = os.getcwd()
+    except FileNotFoundError:
+        prRed(f'\n{excel_dir} excel folder not found')
+        display_exit_code(True, time_start)
+        raise SystemExit
+    
+    for folder in Destinations:
+        numRAs = len(glob.glob('RA*P0*.txt'))
+        for Type in scan_types:
+            if Type in folder:
+                scan_type = Type
+                break
+        try:
+            matching_excel_book = glob.glob(f'{excel_dir}/*{scan_type.casefold()}*')[0]
+        except IndexError:
+            prRed(f'{scan_type} excel file not found for:\t{folder}')
+            flag = True
+        else:
+            shutil.copy(matching_excel_book, folder)
+            print(f'copied {os.path.basename(matching_excel_book)} to:\t{folder}')
+            if numRAs > 10:
+                duplicate = f'{os.path.splitext(matching_excel_book)[0]}(2){os.path.splitext(matching_excel_book)[1]}'
+                shutil.copy(duplicate, folder)
+                print(f'copied {os.path.basename(duplicate)} to:\t{folder}')
 
-display_exit_logs()
-# eof
+    return flag
+
+'''****************************************************************************'''
+
+def main() -> None:
+    root_dir = os.getcwd()
+    display_title_msg(root_dir)
+    time_start = datetime.datetime.now()
+    backup_src(root_dir)
+    flag = src_file_sort(root_dir, time_start)
+    display_exit_code(flag, time_start)
+    
+
+main()
+
+'''
+Exit notes:
+v2.0.0 executes roughly 100% faster than v1.2.4 w/o creating the RA backup folder
+v2.0.0 executes roughly 50% faster than v1.2.4 when all steps in each file are ran
+'''

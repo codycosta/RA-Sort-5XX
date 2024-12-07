@@ -151,7 +151,7 @@ def excel_file_sort(root_dir:str, Destinations: list, time_start) -> bool:
             if numRAs > 10:
                 duplicate = f'{os.path.splitext(os.path.basename(matching_excel_book))[0]}(2){os.path.splitext(os.path.basename(matching_excel_book))[1]}'
                 shutil.copy(matching_excel_book, f'{folder}/{duplicate}')
-                print(f'copied {os.path.basename(duplicate)}(2) to:\t{folder}')
+                print(f'copied {os.path.basename(duplicate)} to:\t{folder}')
 
     return flag
 

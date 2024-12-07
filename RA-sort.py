@@ -135,7 +135,7 @@ def excel_file_sort(root_dir:str, Destinations: list, time_start) -> bool:
         raise SystemExit
     
     for folder in Destinations:
-        numRAs = len(glob.glob('RA*P0*.txt'))
+        numRAs = len(glob.glob(f'{folder}/RA*P0*.txt'))
         for Type in scan_types:
             if Type in folder:
                 scan_type = Type
@@ -149,9 +149,9 @@ def excel_file_sort(root_dir:str, Destinations: list, time_start) -> bool:
             shutil.copy(matching_excel_book, folder)
             print(f'copied {os.path.basename(matching_excel_book)} to:\t{folder}')
             if numRAs > 10:
-                duplicate = f'{os.path.splitext(matching_excel_book)[0]}(2){os.path.splitext(matching_excel_book)[1]}'
-                shutil.copy(duplicate, folder)
-                print(f'copied {os.path.basename(duplicate)} to:\t{folder}')
+                duplicate = f'{os.path.splitext(os.path.basename(matching_excel_book))[0]}(2){os.path.splitext(os.path.basename(matching_excel_book))[1]}'
+                shutil.copy(matching_excel_book, f'{folder}/{duplicate}')
+                print(f'copied {os.path.basename(duplicate)}(2) to:\t{folder}')
 
     return flag
 

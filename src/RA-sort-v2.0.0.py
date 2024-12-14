@@ -9,7 +9,7 @@ Date:       12/3/2024
 '''
 
 import os, shutil, glob, sys, datetime, time
-version = '2.0.0'
+version = '2.0.2'
 os.system('')
 
 '''****************************************************************************'''
@@ -77,6 +77,9 @@ def src_file_sort(root_dir: str, time_start) -> bool:
                 os.mkdir(f'{root_dir}/CETUS')
                 print(f'populating destination folder:\t{root_dir}\\CETUS')
                 Destinations.append(f'{root_dir}/CETUS')
+            if f'{root_dir}\\CETUS' not in Destinations:
+                print(f'populating destination folder:\t{root_dir}\\CETUS')
+                Destinations.append(f'{root_dir}\\CETUS')
             shutil.move(RA, f'{root_dir}/CETUS')
             continue
 
@@ -107,6 +110,9 @@ def src_file_sort(root_dir: str, time_start) -> bool:
         destination = f'{root_dir}\\{scan_type}\\{threshold}'
         if not os.path.exists(destination):
             os.makedirs(destination)
+            print(f'populating destination folder:\t{destination}')
+            Destinations.append(destination)
+        if destination not in Destinations:
             print(f'populating destination folder:\t{destination}')
             Destinations.append(destination)
 

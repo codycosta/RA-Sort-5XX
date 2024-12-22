@@ -99,8 +99,12 @@ def src_file_sort(root_dir: str, time_start) -> bool:
                     threshold = RA[threshold_idx_start: threshold_idx_start + 2]
             
             else:
-                threshold_idx_start = RA.index('-P') - 2
-                threshold = RA[threshold_idx_start: threshold_idx_start + 2]
+                if 'slsd' in RA or 'slmd' in RA:
+                    threshold = '65'
+                else:
+                    threshold_idx_start = RA.index('-P') - 2
+                    threshold = RA[threshold_idx_start: threshold_idx_start + 2]
+                    
                 if 'UXRsl' in RA and scan_type == 'EPSM':
                     scan_type = 'SL'
                         
